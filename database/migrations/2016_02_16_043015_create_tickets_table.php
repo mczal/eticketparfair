@@ -22,8 +22,6 @@ class CreateTicketsTable extends Migration
             $table->timestamp('order_date')->nullable();
             $table->timestamp('active_date')->nullable();
             $table->timestamp('check_in_date')->nullable();
-
-            $table->timestamps(); // untuk created dan updated
         });
     }
 
