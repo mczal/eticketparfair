@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('layouts.app');
 });
 
-Route::get('/tickets','TicketController@index');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +33,15 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/types', 'TypeController@index');
     Route::get('/types/create', 'TypeController@create');
     Route::post('/types/store', 'TypeController@store');
+
+
+
+    //ticket
+    Route::resource('tickets','TicketController');
+    /*Route::get('/tickets','TicketController@index');
+    Route::get('/tickets/create','TicketController@create');
+    Route::get('/tickets/{id}','TicketController@single');
+
+    Route::get('/test','TicketController@create');
+    */
 });
