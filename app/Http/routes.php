@@ -28,7 +28,5 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     //type
-    Route::get('/types', 'TypeController@index');
-    Route::get('/types/create', 'TypeController@create');
-    Route::post('/types/store', 'TypeController@store');
+    Route::resource('types', 'TypeController');
 });
