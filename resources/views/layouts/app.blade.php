@@ -6,7 +6,7 @@
     <html>
     <head>
         <meta charset="UTF-8">
-        <title>AdminLTE 2 | Dashboard</title>
+        <title>@yield('title')</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.2 -->
         <link href="{{ asset("/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
@@ -223,8 +223,8 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Page Header
-                    <small>Optional description</small>
+                    @yield('header')
+                    <small>@yield('subheader')</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -236,6 +236,7 @@
             <section class="content">
 
                 <!-- Your Page Content Here -->
+                @yield('content')
 
             </section><!-- /.content -->
         </div><!-- /.content-wrapper -->
