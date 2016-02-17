@@ -18,11 +18,8 @@ class CreateConfirmationsTable extends Migration
             $table->string('nama_bank');
             $table->integer('total_transfer');
 
-            $table->integer('order')->unsigned(); // from
+            $table->integer('order_id')->index(); // from
             $table->timestamps(); // untuk created dan updated
-
-            //constraint
-            $table->foreign('order')->references('id')->on('orders');
         });
     }
 

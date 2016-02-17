@@ -16,7 +16,7 @@ class CreateTypesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('price');
-            $table->tinyint('active'); /*  0 = not active
+            $table->tinyInteger('active'); /*  0 = not active
                                         *  1 = active     */
 
         });

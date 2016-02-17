@@ -17,9 +17,11 @@ class CreateOrdersTable extends Migration
             $table->string('no_order');
             $table->integer('quantity');
             $table->integer('total_price');
-            $table->tinyint('statusz'); /* status pembayaran..
-                                        default: 0 = belum dibayar
-                                                1 = terbayar.. manual oleh admin
+            $table->tinyInteger('status'); /* status pembayaran..
+                                        default:
+                                                0 = expire
+                                                1 = belum dibayar
+                                                2 = terbayar.. manual oleh admin
                                         */
               //user info
             $table->string('name');
