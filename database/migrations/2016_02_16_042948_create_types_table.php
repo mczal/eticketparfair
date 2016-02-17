@@ -18,6 +18,7 @@ class CreateTypesTable extends Migration
             $table->integer('price');
             $table->tinyInteger('active'); /*  0 = not active
                                         *  1 = active     */
+            $table->timestamps(); // untuk created dan updated
 
         });
     }
