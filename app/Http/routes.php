@@ -29,5 +29,8 @@ Route::get('/tickets','TicketController@index');
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+    //type
+    Route::get('/types', 'TypeController@index');
+    Route::get('/types/create', 'TypeController@create');
+    Route::post('/types/store', 'TypeController@store');
 });
