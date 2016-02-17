@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('layouts.app');
 });
 
+Route::get('/tickets','TicketController@index');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
