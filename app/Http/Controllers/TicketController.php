@@ -90,9 +90,10 @@ class TicketController extends Controller
 	public function show($id)
 	{
 		//
-    $ticket = Ticket::find($id);
+    //$ticket = Ticket::find($id);
+    $ticket = Ticket::where(['id' => $id])->first();
     return view('tickets.show',[
-      'ticket' => $ticket
+      'ticket' => $ticket,
     ]);
 	}
 
@@ -105,6 +106,11 @@ class TicketController extends Controller
 	public function edit($id)
 	{
 		//
+    //$ticket = Ticket::find($id);
+    $ticket = Ticket::where(['id' => $id])->first();
+    return view('tickets.edit',[
+      'ticket' => $ticket,
+    ]);
 	}
 
 	/**
@@ -113,9 +119,33 @@ class TicketController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $id)
 	{
 		//
+    $this->validate($request, [
+        'unique_code' => 'required',
+        'type_id' => 'required',
+    ]);
+
+    $ticket = Ticket::where(['id' => $id])->first();
+
+    $ticket->unique_code = $request->unique_code;
+    $ticket->order_id = $request->order_id;
+    $ticket->type_id = $request->type_id;
+    // echo "a".$request->active_date."a ".$request->order_date;
+    // exit();
+    if($request->order_date > '0000-00-00'){
+      $ticket->order_date = $request->order_date;
+    }
+    if($request->active_date > '0000-00-00'){
+      $ticket->active_date = $request->order_date;
+    }
+    if($request->check_in_date > '0000-00-00'){
+      $ticket->check_in_date = $request->check_in_date;
+    }
+    $ticket->save();
+
+    return redirect('/tickets')->with('success_message', 'Ticket id:<b>' . $ticket->id . '</b> was saved.');
 	}
 
 	/**
@@ -127,6 +157,10 @@ class TicketController extends Controller
 	public function destroy($id)
 	{
 		//
+    $ticket = Ticket::where(['id' => $id])->first(); //apa bedanya dengan find($id) ??
+    $ticket->delete();
+
+    return redirect('/tickets')->with('success_message', 'Ticket id:<b>' . $ticket->id . '</b> was deleted.');
 	}
 
 

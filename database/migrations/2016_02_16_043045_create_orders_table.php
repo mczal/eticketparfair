@@ -30,7 +30,7 @@ class CreateOrdersTable extends Migration
             $table->string('id_type'); //jenis tipe : ktm / ktp / kartupelajar
 
             $table->timestamps(); // created at and updated at
-            $table->timestamp('expired_date');
+            $table->timestamp('expired_date'); //salah tipee niiihhh harusnay datetime koko...
         });
     }
 
