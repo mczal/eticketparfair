@@ -10,7 +10,18 @@
     </p>
     <div class="box box-solid">
         <div class="box-body">
-            <table class="table table-stripped table-hover">
+            @include('commons.success')
+            <p>
+                <form action="{{ url('/types') }}" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="name" value="{{ $name }}" id="name" placeholder="Enter name to search ....">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-flat" type="submit"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+            </p>
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -20,9 +31,31 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(count($types) == 0)
+                        <tr>
+                            <td colspan="4" align="center">No data found ...</td>
+                        </tr>
+                    @endif
+                    @foreach($types as $type)
+                        <tr>
+                            <td>{{ $type->name }}</td>
+                            <td>{{ number_format($type->price) }}</td>
+                            <td>{{ $type->active == 1 ? 'Active' : 'Not Active' }}</td>
+                            <td>
+                                <a href="{{ url('/types/'.$type->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
+                                <a href="{{ url('/types/'.$type->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                <form action="{{ url('/types/'.$type->id.'') }}" method="post" style="display:inline">
+                                    {!! csrf_field() !!}
+                                    {!! method_field('DELETE') !!}
+
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
-            {{ $types }}
+            {!! $types->appends(['name' => $name])->links() !!}
         </div><!-- /.box-body -->
     </div>
 @endsection

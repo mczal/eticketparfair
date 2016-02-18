@@ -30,11 +30,6 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     //type
-    Route::get('/types', 'TypeController@index');
-    Route::get('/types/create', 'TypeController@create');
-    Route::post('/types/store', 'TypeController@store');
-
-
 
     //ticket
     Route::resource('tickets','TicketController');
@@ -44,4 +39,5 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/test','TicketController@create');
     */
+    Route::resource('types', 'TypeController');
 });

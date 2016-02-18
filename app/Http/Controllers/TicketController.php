@@ -14,7 +14,8 @@ class TicketController extends Controller
     //
 
     protected $tickets;
-    private $code = "qwepoijhgasdmnbzxkjhsad098712346!@#$%^%*)(*`~]'.,/?!'`)";
+
+
 
     public function __construct(TicketRepositories $tickets){
       $this->tickets = $tickets;
@@ -43,13 +44,15 @@ class TicketController extends Controller
   *My Function GENERATOR UNIQUE
   *
   */
-  // private function generateCode(){
-  //   $result = "";
-  //   for($i=0;$i<10;$i++){
-  //     $result+=$this->$code{rand()*50}+"";
-  //   }
-  //   return $result;
-  // }
+   private function generateCode(){
+    $code = "qwepoijhg23asdmnbzxABSNHQYIWPOMNZBVCkjhsad098712346";
+    $result = "";
+      for($i=0;$i<10;$i++){
+        $result.=$code[rand(0,50)];
+        echo $result."<br/>";
+      }
+     return $result;
+   }
 
 	/**
 	 * Store a newly created resource in storage.
@@ -68,16 +71,14 @@ class TicketController extends Controller
     ]);
 
     for($i=0;$i<$amount;$i++){
-      $code = $this->generateCode();
-      $request->ticket()->create([
-          'unique_code' => $code,
-          'order_id' => $request->order_id,
-          'type_id' => $request->type_id,
-      ]);
+      $ticket = new Ticket;
+      $ticket->unique_code = $this->generateCode();
+      $ticket->type_id = $ticketType;
+      $ticket->order_id = 'null';
+      $ticket->save();
     }
 
-
-    return redirect('/tasks');
+    return redirect('/tickets');
 	}
 
 	/**
@@ -86,10 +87,13 @@ class TicketController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show(Request $request)
+	public function show($id)
 	{
 		//
-    $ticket = Ticket::find($request->id);
+    $ticket = Ticket::find($id);
+    return view('tickets.show',[
+      'ticket' => $ticket
+    ]);
 	}
 
 	/**
