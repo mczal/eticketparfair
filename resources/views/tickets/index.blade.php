@@ -30,7 +30,7 @@
             <td>
               <a href="{{url('/tickets/'.$ticket->id)}}" class="btn btn-default"><i class="fa fa-eye"></i></a>
               <a href="{{url('/tickets/'.$ticket->id.'/edit')}}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-              <form action="{{ url('/tickets/'.$ticket->id.'') }}" method="post" style="display:inline">
+              <form action="{{ url('/tickets/'.$ticket->id) }}" method="post" style="display:inline">
                   {!! csrf_field() !!}
                   {!! method_field('DELETE') !!}
 

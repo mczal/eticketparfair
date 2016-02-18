@@ -45,7 +45,7 @@ class TicketController extends Controller
   *
   */
    private function generateCode(){
-    $code = "qwepoijhg23asdmnbzxABSNHQYIWPOMNZBVCkjhsad098712346";
+    $code = "qwepoijhg23asdmnbzxABSNHQYIWPOMNZBVCkjhad098712346";
     $result = "";
       for($i=0;$i<10;$i++){
         $result.=$code[rand(0,50)];
@@ -78,7 +78,7 @@ class TicketController extends Controller
       $ticket->save();
     }
 
-    return redirect('/tickets');
+    return redirect('/tickets')->with('success_message', '<b>'.$amount.'</b> tickets was created.');
 	}
 
 	/**

@@ -15,7 +15,7 @@
 
             <!-- Ticket unique code -->
             <div class="form-group{{ $errors->has('unique_code') ? ' has-error' : '' }}">
-                <label for="ticket-code" class="col-sm-1 control-label">Unique Code</label>
+                <label for="ticket-code" class="col-sm-2 control-label">Unique Code</label>
                 <div class="col-sm-6">
                     <input type="text" name="unique_code" id="ticket-code" class="form-control" value="{{ isset($ticket->unique_code) ? $ticket->unique_code : '' }}">
                     @if ($errors->has('unique_code'))
@@ -28,7 +28,7 @@
 
             <!-- ticket type -->
             <div class="form-group{{ $errors->has('type_id') ? ' has-error' : '' }}">
-                <label for="type_id" class="col-sm-1 control-label">Type Id</label>
+                <label for="type_id" class="col-sm-2 control-label">Type Id</label>
 
                 <div class="col-sm-3">
                     <input type="text" name="type_id" id="type_id" class="form-control" value="{{ isset($ticket->type_id) ? $ticket->type_id : 0 }} ">
@@ -42,7 +42,7 @@
 
             <!-- ticket order -->
             <div class="form-group{{ $errors->has('order_id') ? ' has-error' : '' }}">
-                <label for="order_id" class="col-sm-1 control-label">Order Id</label>
+                <label for="order_id" class="col-sm-2 control-label">Order Id</label>
 
                 <div class="col-sm-3">
                     <input type="text" name="order_id" id="order_id" class="form-control" value="{{ isset($ticket->order_id) ? $ticket->order_id : 0 }} ">
@@ -56,7 +56,7 @@
 
             <!-- ticket order date -->
             <div class="form-group{{ $errors->has('order_date') ? ' has-error' : '' }}">
-                <label for="ticket-order-date" class="col-sm-1 control-label">Order Date</label>
+                <label for="ticket-order-date" class="col-sm-2 control-label">Order Date</label>
 
                 <div class="col-sm-3">
                     <input type="datetime" name="order_date" id="ticket-order-date" class="form-control" value="{{ isset($ticket->order_date) ? $ticket->order_date : '' }} ">
@@ -73,7 +73,7 @@
 
             <!-- ticket active date -->
             <div class="form-group{{ $errors->has('active_date') ? ' has-error' : '' }}">
-                <label for="ticket-active-date" class="col-sm-1 control-label">Active Date</label>
+                <label for="ticket-active-date" class="col-sm-2 control-label">Active Date</label>
 
                 <div class="col-sm-3">
                     <input type="datetime" name="active_date" id="ticket-active-date" class="form-control" value="{{ isset($ticket->active_date) ? $ticket->active_date : '' }} ">
@@ -87,7 +87,7 @@
 
             <!-- ticket checkin date -->
             <div class="form-group{{ $errors->has('check_in_date') ? ' has-error' : '' }}">
-                <label for="ticket-checkin-date" class="col-sm-1 control-label">Checkin Date</label>
+                <label for="ticket-checkin-date" class="col-sm-2 control-label">Checkin Date</label>
 
                 <div class="col-sm-3">
                     <input type="datetime" name="check_in_date" id="ticket-checkin-date" class="form-control" value="{{ isset($ticket->check_in_date) ? $ticket->check_in_date : '' }} ">

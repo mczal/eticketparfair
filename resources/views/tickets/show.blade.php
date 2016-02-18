@@ -12,7 +12,7 @@
           <!-- Ticket Code -->
           <div class="row">
               <div class="form-group">
-                  <label for="ticket-code" class="col-sm-1 control-label">unique code</label>
+                  <label for="ticket-code" class="col-sm-2 control-label">unique code</label>
 
                   <div class="col-sm-6">
                       {{ $ticket->unique_code }}
@@ -23,7 +23,7 @@
           <!-- Ticket order id -->
           <div class="row">
               <div class="form-group">
-                  <label for="ticket-order-id" class="col-sm-1 control-label">Order Id</label>
+                  <label for="ticket-order-id" class="col-sm-2 control-label">Order Id</label>
 
                   <div class="col-sm-3">
                       {{ $ticket->order_id }}
@@ -34,7 +34,7 @@
           <!-- Ticket type id -->
           <div class="row">
               <div class="form-group">
-                  <label for="ticket-type-id" class="col-sm-1 control-label">Type Id</label>
+                  <label for="ticket-type-id" class="col-sm-2 control-label">Type Id</label>
                   <div class="col-sm-3">
                       {{ $ticket->type_id }}
                   </div>
@@ -44,7 +44,7 @@
           <!-- Ticket order date -->
           <div class="row">
               <div class="form-group">
-                  <label for="ticket-order-date" class="col-sm-1 control-label">Order Date</label>
+                  <label for="ticket-order-date" class="col-sm-2 control-label">Order Date</label>
                   <div class="col-sm-3">
                       {{ $ticket->order_date }}
                   </div>
@@ -54,7 +54,7 @@
           <!-- Ticket active date -->
           <div class="row">
               <div class="form-group">
-                  <label for="ticket-active-date" class="col-sm-1 control-label">Active Date</label>
+                  <label for="ticket-active-date" class="col-sm-2 control-label">Active Date</label>
                   <div class="col-sm-3">
                       {{ $ticket->active_date }}
                   </div>
@@ -64,7 +64,7 @@
           <!-- Ticket check in date -->
           <div class="row">
               <div class="form-group">
-                  <label for="ticket-check-in-date" class="col-sm-1 control-label">Check In Date</label>
+                  <label for="ticket-check-in-date" class="col-sm-2 control-label">Check In Date</label>
                   <div class="col-sm-3">
                       {{ $ticket->check_in_date }}
                   </div>

@@ -29,15 +29,8 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //type
-
-    //ticket
+    //require auth
     Route::resource('tickets','TicketController');
-    /*Route::get('/tickets','TicketController@index');
-    Route::get('/tickets/create','TicketController@create');
-    Route::get('/tickets/{id}','TicketController@single');
-
-    Route::get('/test','TicketController@create');
-    */
     Route::resource('types', 'TypeController');
+    Route::resource('confirmations','ConfirmationController');
 });
