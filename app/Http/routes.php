@@ -30,7 +30,8 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     //require auth
-    Route::resource('tickets','TicketController');
+    Route::resource('orders', 'OrderController');
+    Route::resource('tickets', 'TicketController');
     Route::resource('types', 'TypeController');
-    Route::resource('confirmations','ConfirmationController');
+    Route::resource('confirmations', 'ConfirmationController');
 });
