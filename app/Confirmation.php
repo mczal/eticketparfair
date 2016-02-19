@@ -8,6 +8,6 @@ class Confirmation extends Model
 {
     //
     public function order(){
-      return $this->belongsTo('Order');
+      return $this->belongsTo(Order::class);
     }
 }

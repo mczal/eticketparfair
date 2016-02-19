@@ -11,12 +11,10 @@ use App\Confirmation;
 
 class ConfirmationController extends Controller
 {
-    //
-
     protected $confirmations;
 
     public function __construct(ConfirmationRepositories $confirmations){
-      $this->confirmations = $confirmations;
+        $this->confirmations = $confirmations;
     }
 
     /**
@@ -26,12 +24,11 @@ class ConfirmationController extends Controller
 	 */
 	public function index()
 	{
-		//
-    $confirmations = Confirmation::paginate(30);
+        $confirmations = Confirmation::paginate(30);
 
-    return view('confirmations.index',[
-      'confirmations' => $confirmations,
-    ]);
+        return view('confirmations.index',[
+            'confirmations' => $confirmations,
+        ]);
 	}
 
 	/**
@@ -41,8 +38,7 @@ class ConfirmationController extends Controller
 	 */
 	public function create()
 	{
-		//
-    return view('confirmations.create');
+        return view('confirmations.create');
 	}
 
 	/**
@@ -52,22 +48,21 @@ class ConfirmationController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
-    $this->validate($request,[
-      'no_rekening' => 'required',
-      'nama_bank' => 'required',
-      'total_transfer' => 'required',
-      'order_id' => 'required',
-    ]);
+        $this->validate($request,[
+            'no_rekening' => 'required',
+            'nama_bank' => 'required',
+            'total_transfer' => 'required',
+            'order_id' => 'required',
+        ]);
 
-    $confirmation = new Confirmation;
-    $confirmation->order_id = $request->order_id;
-    $confirmation->no_rekening = $request->no_rekening;
-    $confirmation->nama_bank = $request->nama_bank;
-    $confirmation->total_transfer = $request->total_transfer;
-    $confirmation->save();
+        $confirmation = new Confirmation;
+        $confirmation->order_id = $request->order_id;
+        $confirmation->no_rekening = $request->no_rekening;
+        $confirmation->nama_bank = $request->nama_bank;
+        $confirmation->total_transfer = $request->total_transfer;
+        $confirmation->save();
 
-    return redirect('/confirmations')->with('success_message', 'confirmation was created');
+        return redirect('/confirmations')->with('success_message', 'confirmation was created');
 	}
 
 	/**
@@ -78,11 +73,10 @@ class ConfirmationController extends Controller
 	 */
 	public function show($id)
 	{
-		//
-    $confirmation = Confirmation::where(['id' => $id])->first();
-    return view('confirmations.show',[
-      'confirmation' => $confirmation,
-    ]);
+        $confirmation = Confirmation::where(['id' => $id])->first();
+        return view('confirmations.show',[
+            'confirmation' => $confirmation,
+        ]);
 	}
 
 	/**
@@ -93,11 +87,10 @@ class ConfirmationController extends Controller
 	 */
 	public function edit($id)
 	{
-		//
-    $confirmation = Confirmation::where(['id' => $id])->first();
-    return view('confirmations.edit',[
-      'confirmation' => $confirmation,
-    ]);
+        $confirmation = Confirmation::where(['id' => $id])->first();
+        return view('confirmations.edit',[
+            'confirmation' => $confirmation,
+        ]);
 	}
 
 	/**
@@ -108,23 +101,21 @@ class ConfirmationController extends Controller
 	 */
 	public function update($id,Request $request)
 	{
-		//
-    $this->validate($request,[
-      'no_rekening' => 'required',
-      'nama_bank' => 'required',
-      'total_transfer' => 'required',
-      'order_id' => 'required',
-    ]);
+        $this->validate($request,[
+            'no_rekening' => 'required',
+            'nama_bank' => 'required',
+            'total_transfer' => 'required',
+            'order_id' => 'required',
+        ]);
 
-    $confirmation = Confirmation::where(['id' => $id])->first();
-    $confirmation->no_rekening = $request->no_rekening;
-    $confirmation->nama_bank = $request->nama_bank;
-    $confirmation->total_transfer = $request->total_transfer;
-    $confirmation->order_id = $request->order_id;
-    $confirmation->save();
+        $confirmation = Confirmation::where(['id' => $id])->first();
+        $confirmation->no_rekening = $request->no_rekening;
+        $confirmation->nama_bank = $request->nama_bank;
+        $confirmation->total_transfer = $request->total_transfer;
+        $confirmation->order_id = $request->order_id;
+        $confirmation->save();
 
-    return redirect('/confirmations')->with('success_message', 'Confirmation id:<b>' . $confirmation->id . '</b> was saved.');
-
+        return redirect('/confirmations')->with('success_message', 'Confirmation id:<b>' . $confirmation->id . '</b> was saved.');
 	}
 
 	/**
@@ -135,11 +126,9 @@ class ConfirmationController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
-    $confirmation = Confirmation::where(['id' => $id])->first();
-    $confirmation->delete();
+        $confirmation = Confirmation::where(['id' => $id])->first();
+        $confirmation->delete();
 
-    return redirect('/confirmations')->with('success_message', 'Confirmation id:<b>' . $confirmation->id . '</b> was deleted.');
-
+        return redirect('/confirmations')->with('success_message', 'Confirmation id:<b>' . $confirmation->id . '</b> was deleted.');
 	}
 }

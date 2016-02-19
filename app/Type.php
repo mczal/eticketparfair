@@ -10,6 +10,6 @@ class Type extends Model
 
     //
     public function tickets(){
-      return $this->hasMany('Ticket');
+      return $this->hasMany(Ticket::class);
     }
 }

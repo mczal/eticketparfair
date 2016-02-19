@@ -7,9 +7,22 @@ use Illuminate\Http\Request;
 use App\Type;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Repositories\TypeRepositories;
 
 class TypeController extends Controller
 {
+    protected $types;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param  TypeRepositories  $tasks
+     * @return void
+     */
+     public function __construct(TypeRepositories $types){
+         $this->types = $types;
+     }
+
     /**
     * Types list view
     * @param Request
@@ -17,12 +30,7 @@ class TypeController extends Controller
     public function index(Request $request){
         $name = $request->name;
 
-        if(!empty($name)){
-            $types = Type::where('name', 'like', '%' . $name . '%')->paginate(10);
-        }else{
-            $types = Type::paginate(10);
-        }
-
+        $types = $this->types->getAllFiltered($name);
 
         return view('types.index', [
             'types' => $types,
@@ -59,7 +67,7 @@ class TypeController extends Controller
     * Show data id
     */
     public function show($id){
-        $type = Type::where(['id' => $id])->first();
+        $type = $this->types->findById($id);
         return view('types.show', [
             'type' => $type,
         ]);
@@ -69,7 +77,7 @@ class TypeController extends Controller
     * Show data with form
     */
     public function edit($id){
-        $type = Type::where(['id' => $id])->first();
+        $type = $this->types->findById($id);
         return view('types.edit', [
             'type' => $type,
         ]);
@@ -84,7 +92,7 @@ class TypeController extends Controller
             'price' => 'required',
         ]);
 
-        $type = Type::where(['id' => $id])->first();
+        $type = $this->types->findById($id);
         $type->name = $request->name;
         $type->price = $request->price;
         $type->active = $request->active;
@@ -97,7 +105,7 @@ class TypeController extends Controller
     * Delete the selected data
     */
     public function destroy($id){
-        $type = Type::where(['id' => $id])->first();
+        $type = $this->types->findById($id);
         $type->delete();
 
         return redirect('/types')->with('success_message', 'Type <b>' . $type->name . '</b> was deleted.');

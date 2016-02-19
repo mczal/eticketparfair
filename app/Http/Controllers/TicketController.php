@@ -8,25 +8,22 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Ticket;
 use App\Repositories\TicketRepositories;
+use App\Repositories\TypeRepositories;
 
 class TicketController extends Controller
 {
-    //
-
     protected $tickets;
+    protected $types;
 
-
-
-    public function __construct(TicketRepositories $tickets){
-      $this->tickets = $tickets;
+    public function __construct(TicketRepositories $tickets, TypeRepositories $types){
+        $this->tickets = $tickets;
+        $this->types = $types;
     }
 
     public function index()
 	{
-		//
-    $tickets = Ticket::all();
-
-    return view('tickets.index', compact('tickets'));
+        $tickets = Ticket::paginate(10);
+        return view('tickets.index', compact('tickets'));
 	}
 
 	/**
@@ -36,23 +33,23 @@ class TicketController extends Controller
 	 */
 	public function create()
 	{
-		//
-    return view('tickets.create');
+        return view('tickets.create', [
+            'types' => $this->types->getAllActive(),
+        ]);
 	}
 
-  /**
-  *My Function GENERATOR UNIQUE
-  *
-  */
-   private function generateCode(){
-    $code = "qwepoijhg23asdmnbzxABSNHQYIWPOMNZBVCkjhad098712346";
-    $result = "";
-      for($i=0;$i<10;$i++){
-        $result.=$code[rand(0,50)];
-        echo $result."<br/>";
-      }
-     return $result;
-   }
+    /**
+    * My Function GENERATOR UNIQUE
+    *
+    */
+    private function generateCode(){
+        $code = "0123456789ABCEDFGHIJKLMNOPQRSTUVWXZ";
+        $result = "";
+        for($i=0;$i<10;$i++){
+            $result.=$code[rand(0,35)];
+        }
+        return $result;
+    }
 
 	/**
 	 * Store a newly created resource in storage.
@@ -61,24 +58,23 @@ class TicketController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
-    $ticketType = $request->type;
-    $amount = $request->amount;
+        $ticketType = $request->type;
+        $amount = $request->amount;
 
-    $this->validate($request, [
-        'type' => 'required',
-        'amount' => 'required',
-    ]);
+        $this->validate($request, [
+            'type' => 'required',
+            'amount' => 'required',
+        ]);
 
-    for($i=0;$i<$amount;$i++){
-      $ticket = new Ticket;
-      $ticket->unique_code = $this->generateCode();
-      $ticket->type_id = $ticketType;
-      $ticket->order_id = 'null';
-      $ticket->save();
-    }
+        for($i=0;$i<$amount;$i++){
+            $ticket = new Ticket;
+            $ticket->unique_code = $this->generateCode();
+            $ticket->type_id = $ticketType;
+            $ticket->order_id = 'null';
+            $ticket->save();
+        }
 
-    return redirect('/tickets')->with('success_message', '<b>'.$amount.'</b> tickets was created.');
+        return redirect('/tickets')->with('success_message', '<b>'.$amount.'</b> tickets was created.');
 	}
 
 	/**
@@ -89,12 +85,11 @@ class TicketController extends Controller
 	 */
 	public function show($id)
 	{
-		//
-    //$ticket = Ticket::find($id);
-    $ticket = Ticket::where(['id' => $id])->first();
-    return view('tickets.show',[
-      'ticket' => $ticket,
-    ]);
+        //$ticket = Ticket::find($id);
+        $ticket = Ticket::where(['id' => $id])->first();
+        return view('tickets.show',[
+            'ticket' => $ticket,
+        ]);
 	}
 
 	/**
@@ -105,12 +100,11 @@ class TicketController extends Controller
 	 */
 	public function edit($id)
 	{
-		//
-    //$ticket = Ticket::find($id);
-    $ticket = Ticket::where(['id' => $id])->first();
-    return view('tickets.edit',[
-      'ticket' => $ticket,
-    ]);
+        //$ticket = Ticket::find($id);
+        $ticket = Ticket::where(['id' => $id])->first();
+        return view('tickets.edit',[
+            'ticket' => $ticket,
+        ]);
 	}
 
 	/**
@@ -121,31 +115,30 @@ class TicketController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		//
-    $this->validate($request, [
-        'unique_code' => 'required',
-        'type_id' => 'required',
-    ]);
+        $this->validate($request, [
+            'unique_code' => 'required',
+            'type_id' => 'required',
+        ]);
 
-    $ticket = Ticket::where(['id' => $id])->first();
+        $ticket = Ticket::where(['id' => $id])->first();
 
-    $ticket->unique_code = $request->unique_code;
-    $ticket->order_id = $request->order_id;
-    $ticket->type_id = $request->type_id;
-    // echo "a".$request->active_date."a ".$request->order_date;
-    // exit();
-    if($request->order_date > '0000-00-00'){
-      $ticket->order_date = $request->order_date;
-    }
-    if($request->active_date > '0000-00-00'){
-      $ticket->active_date = $request->order_date;
-    }
-    if($request->check_in_date > '0000-00-00'){
-      $ticket->check_in_date = $request->check_in_date;
-    }
-    $ticket->save();
+        $ticket->unique_code = $request->unique_code;
+        $ticket->order_id = $request->order_id;
+        $ticket->type_id = $request->type_id;
+        // echo "a".$request->active_date."a ".$request->order_date;
+        // exit();
+        if($request->order_date > '0000-00-00'){
+            $ticket->order_date = $request->order_date;
+        }
+        if($request->active_date > '0000-00-00'){
+            $ticket->active_date = $request->order_date;
+        }
+        if($request->check_in_date > '0000-00-00'){
+            $ticket->check_in_date = $request->check_in_date;
+        }
+        $ticket->save();
 
-    return redirect('/tickets')->with('success_message', 'Ticket id:<b>' . $ticket->id . '</b> was saved.');
+        return redirect('/tickets')->with('success_message', 'Ticket id:<b>' . $ticket->id . '</b> was saved.');
 	}
 
 	/**
@@ -156,12 +149,9 @@ class TicketController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
-    $ticket = Ticket::where(['id' => $id])->first(); //apa bedanya dengan find($id) ??
-    $ticket->delete();
+        $ticket = Ticket::where(['id' => $id])->first(); //apa bedanya dengan find($id) ??
+        $ticket->delete();
 
-    return redirect('/tickets')->with('success_message', 'Ticket id:<b>' . $ticket->id . '</b> was deleted.');
+        return redirect('/tickets')->with('success_message', 'Ticket id:<b>' . $ticket->id . '</b> was deleted.');
 	}
-
-
 }

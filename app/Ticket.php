@@ -10,10 +10,10 @@ class Ticket extends Model
     public $timestamps = false;
 
     public function order(){
-      return $this->belongsTo('Order');
+      return $this->belongsTo(Order::class);
     }
 
     public function type(){
-      return $this->belongsTo('Type');
+      return $this->belongsTo(Type::class);
     }
 }

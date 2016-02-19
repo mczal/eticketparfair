@@ -8,10 +8,10 @@ class Order extends Model
 {
     //
     public function orders(){
-      return $this->hasMany('Ticket');
+      return $this->hasMany(Ticket::class);
     }
 
-    pubilc function confirmation(){
-      return $this->hasOne('Confirmation');
+    public function confirmation(){
+      return $this->hasOne(Confirmation::class);
     }
 }
