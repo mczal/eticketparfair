@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Orders');
-@section('header', 'Orders');
+@section('title', 'Orders')
+@section('header', 'Orders')
 @section('subheader', 'Orders List')
 
 @section('content')
@@ -28,10 +28,25 @@
                         <th>name</th>
                         <th>tgl_order</th>
                         <th>status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    @if(count($orders) == 0)
+                        <tr>
+                            <td colspan="5" align="center">No data found ...</td>
+                        </tr>
+                    @else
+                        @foreach($orders as $order)
+                            <tr>
+                                <td>{{ $order->no_order }}</td>
+                                <td>{{ $order->name }}</td>
+                                <td>{{ date('d M Y H:i:s', strtotime($order->created_at)) }}</td>
+                                <td>{{ App\Order::getStatusList($order->status) }}</td>
+                                <td></td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>

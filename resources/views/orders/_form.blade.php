@@ -3,7 +3,7 @@
     <label for="order-name" class="col-sm-2 control-label">Name</label>
 
     <div class="col-sm-6">
-        <input type="text" name="name" id="order-name" class="form-control" value="{{ isset($order->name) ? $order->name : '' }}">
+        <input type="text" name="name" id="order-name" class="form-control" value="{{ isset($order->name) ? $order->name : old('name') }}">
         @if ($errors->has('name'))
             <span class="help-block">
                 <strong>{{ $errors->first('name') }}</strong>
@@ -17,7 +17,7 @@
     <label for="order-address" class="col-sm-2 control-label">Address</label>
 
     <div class="col-sm-6">
-        <textarea name="name" id="order-address" class="form-control" value="{{ isset($order->address) ? $order->address : '' }}"></textarea>
+        <textarea name="address" id="order-address" class="form-control">{{ isset($order->address) ? $order->address : old('address') }}</textarea>
         @if ($errors->has('address'))
             <span class="help-block">
                 <strong>{{ $errors->first('address') }}</strong>
@@ -31,10 +31,24 @@
     <label for="order-email" class="col-sm-2 control-label">Email</label>
 
     <div class="col-sm-6">
-        <input type="email" name="email" id="order-email" class="form-control" value="{{ isset($order->email) ? $order->email : '' }}">
+        <input type="email" name="email" id="order-email" class="form-control" value="{{ isset($order->email) ? $order->email : old('email') }}">
         @if ($errors->has('email'))
             <span class="help-block">
                 <strong>{{ $errors->first('email') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+<!-- Handphone -->
+<div class="form-group{{ $errors->has('handphone') ? ' has-error' : '' }}">
+    <label for="order-handphone" class="col-sm-2 control-label">Handphone</label>
+
+    <div class="col-sm-6">
+        <input type="text" name="handphone" id="order-handphone" class="form-control" value="{{ isset($order->handphone) ? $order->handphone : old('handphone') }}">
+        @if ($errors->has('handphone'))
+            <span class="help-block">
+                <strong>{{ $errors->first('handphone') }}</strong>
             </span>
         @endif
     </div>
@@ -46,11 +60,14 @@
 
     <div class="col-sm-6">
         <select class="form-control" name="id_type" id="order-id_type">
-        <option value="ktp"{{ (isset($order) && $order->id_type == 'ktp') ? ' selected' : '' }}>KTP</option>
-            <option value="sim"{{ (isset($order) && $order->id_type == 'sim') ? ' selected' : '' }}>SIM</option>
-            <option value="ktm"{{ (isset($order) && $order->id_type == 'ktm') ? ' selected' : '' }}>KTM</option>
-            <option value="kartu_pelajar"{{ (isset($order) && $order->id_type == 'kartu_pelajar') ? ' selected' : '' }}>Kartu Pelajar</option>
-            <option value="lainnya"{{ (isset($order) && $order->id_type == 'lainnya') ? ' selected' : '' }}>Lainnya</option>
+            <!-- <option value="ktp"{{ (isset($order) && $order->id_type == 'ktp') || old('id_type') == 'ktp' ? ' selected' : '' }}>KTP</option>
+            <option value="sim"{{ (((isset($order) && $order->id_type == 'sim') || old('id_type') == 'sim')) ? ' selected' : '' }}>SIM</option>
+            <option value="ktm"{{ ((isset($order) && $order->id_type == 'ktm') || old('id_type') == 'ktm') ? ' selected' : '' }}>KTM</option>
+            <option value="kartu_pelajar"{{ ((isset($order) && $order->id_type == 'kartu_pelajar') || old('id_type') == 'kartu_pelajar') ? ' selected' : '' }}>Kartu Pelajar</option>
+            <option value="lainnya"{{ ((isset($order) && $order->id_type == 'lainnya') || old('id_type') == 'lainnya') ? ' selected' : '' }}>Lainnya</option> -->
+            @foreach(App\Order::getIdTypeList() as $key => $type)
+                <option value="{{ $key }}"{{ (isset($order) && $order->id_type == $key) || old('id_type') == $key ? ' selected' : '' }}>{{ $type }}</option>
+            @endforeach
         </select>
 
         @if ($errors->has('id_type'))
@@ -66,7 +83,7 @@
     <label for="order-id_no" class="col-sm-2 control-label">ID Number</label>
 
     <div class="col-sm-6">
-        <input type="text" name="id_no" id="order-id_no" class="form-control" value="{{ isset($order->id_no) ? $order->id_no : '' }}">
+        <input type="text" name="id_no" id="order-id_no" class="form-control" value="{{ isset($order->id_no) ? $order->id_no : old('id_no') }}">
         @if ($errors->has('id_no'))
             <span class="help-block">
                 <strong>{{ $errors->first('id_no') }}</strong>
@@ -75,12 +92,12 @@
     </div>
 </div>
 
-<!-- Email -->
+<!-- Quantity -->
 <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
     <label for="order-quantity" class="col-sm-2 control-label">Quantity</label>
 
     <div class="col-sm-2">
-        <input type="number" name="quantity" id="order-quantity" class="form-control" value="{{ isset($order->quantity) ? $order->quantity : '' }}">
+        <input type="number" name="quantity" id="order-quantity" class="form-control" value="{{ isset($order->quantity) ? $order->quantity : old('quantity') }}">
         @if ($errors->has('quantity'))
             <span class="help-block">
                 <strong>{{ $errors->first('quantity') }}</strong>
