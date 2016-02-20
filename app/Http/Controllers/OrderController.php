@@ -9,11 +9,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Repositories\OrderRepositories;
+use App\Repositories\TypeRepositories;
 
 class OrderController extends Controller
 {
 
     protected $orders;
+    protected $types;
 
     /**
     * Create a new controller instance.
@@ -21,8 +23,9 @@ class OrderController extends Controller
     * @param  OrderRepositories  $orders
     * @return void
     */
-    public function __construct(OrderRepositories $orders){
+    public function __construct(OrderRepositories $orders, TypeRepositories $types){
         $this->orders = $orders;
+        $this->types = $types;
     }
 
     /**
@@ -39,7 +42,10 @@ class OrderController extends Controller
     }
 
     public function create(){
-        return view('orders.create');
+        $types = $this->types->getAllActive();
+        return view('orders.create', [
+            'types' => $types,
+        ]);
     }
 
     public function edit(){
@@ -55,21 +61,24 @@ class OrderController extends Controller
     */
     public function store(Request $request){
         $this->validate($request, [
+            'type_id' => 'required|integer',
             'name' => 'required',
             'address' => 'required',
             'email' => 'required|unique:orders|email',
             'handphone' => 'required',
             'id_type' => 'required',
             'id_no' => 'required',
-            'quantity' => 'required|numeric|min:1|max:3',
+            'quantity' => 'required|integer|min:1|max:3',
         ]);
+
+        $type = $this->types->findById($request->type_id);
 
         $order = new Order;
         $order->fill($request->all());
         $order->no_order = $this->orders->generateNoOrder();
         $order->expired_date = date('Y-m-d H:i:s', time() + (3600 * 10)); //10 hours
         $order->status = 1;
-        $order->total_price = 0; //TODO: count the total
+        $order->total_price = ($type->price * $order->quantity) + rand(1, 999); //TODO: count the total
         $order->save();
 
         //TODO: sent email to customer

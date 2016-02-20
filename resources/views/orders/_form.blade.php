@@ -1,3 +1,22 @@
+<!-- TICKET TYPE -->
+<div class="form-group{{ $errors->has('type_id') ? ' has-error' : '' }}">
+    <label for="order-type_id" class="col-sm-2 control-label">Ticket Type</label>
+
+    <div class="col-sm-6">
+        <select class="form-control" name="type_id" id="order-type_id">
+            @foreach($types as $type)
+                <option value="{{ $type->id }}"{{ (isset($order) && $order->type_id == $type->id) || old('type_id') == $type->id ? ' selected' : '' }}>{{ $type->name }}</option>
+            @endforeach
+        </select>
+
+        @if ($errors->has('type_id'))
+            <span class="help-block">
+                <strong>{{ $errors->first('type_id') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
 <!-- Name -->
 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
     <label for="order-name" class="col-sm-2 control-label">Name</label>
@@ -60,11 +79,6 @@
 
     <div class="col-sm-6">
         <select class="form-control" name="id_type" id="order-id_type">
-            <!-- <option value="ktp"{{ (isset($order) && $order->id_type == 'ktp') || old('id_type') == 'ktp' ? ' selected' : '' }}>KTP</option>
-            <option value="sim"{{ (((isset($order) && $order->id_type == 'sim') || old('id_type') == 'sim')) ? ' selected' : '' }}>SIM</option>
-            <option value="ktm"{{ ((isset($order) && $order->id_type == 'ktm') || old('id_type') == 'ktm') ? ' selected' : '' }}>KTM</option>
-            <option value="kartu_pelajar"{{ ((isset($order) && $order->id_type == 'kartu_pelajar') || old('id_type') == 'kartu_pelajar') ? ' selected' : '' }}>Kartu Pelajar</option>
-            <option value="lainnya"{{ ((isset($order) && $order->id_type == 'lainnya') || old('id_type') == 'lainnya') ? ' selected' : '' }}>Lainnya</option> -->
             @foreach(App\Order::getIdTypeList() as $key => $type)
                 <option value="{{ $key }}"{{ (isset($order) && $order->id_type == $key) || old('id_type') == $key ? ' selected' : '' }}>{{ $type }}</option>
             @endforeach

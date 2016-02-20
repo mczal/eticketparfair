@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+    use SoftDeletes;
+
     //status constant
     const STATUS_EXPIRE = 0;
     const STATUS_ORDERED = 1;
@@ -33,6 +36,13 @@ class Order extends Model
     */
     public function confirmation(){
         return $this->hasOne(Confirmation::class);
+    }
+
+    /**
+    * Relation to Type model
+    */
+    public function type(){
+        return $this->belongsTo(Type::class);
     }
 
     /**
