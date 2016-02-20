@@ -8,6 +8,7 @@ use Mail;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\Ticket;
 use App\Repositories\OrderRepositories;
 use App\Repositories\TypeRepositories;
 
@@ -91,8 +92,12 @@ class OrderController extends Controller
             'quantity' => 'required|integer|min:1|max:3',
         ]);
 
+        //find type
         $type = $this->types->findById($request->type_id);
 
+        //TODO: check ticket remaining
+
+        //save order
         $order = new Order;
         $order->fill($request->all());
         $order->no_order = $this->orders->generateNoOrder();
@@ -100,6 +105,19 @@ class OrderController extends Controller
         $order->status = 1;
         $order->total_price = ($type->price * $order->quantity) + rand(1, 999);
         $order->save();
+
+        //TODO: make safer saving technique with transaction
+        //set to ticket
+        $tickets = Ticket::where('type_id', $type->id)
+                        ->where('order_date', NULL)
+                        ->limit($order->quantity)
+                        ->get();
+
+        foreach($tickets as $ticket){
+            $ticket->order()->associate($order);
+            $ticket->order_date = date('Y-m-d H:i:s');
+            $ticket->save();
+        }
 
         Mail::send('emails.order', ['order' => $order], function($m) use ($order){
             $m->from('wilianto.indra@gmail.com', 'Parahyangan Fair');
