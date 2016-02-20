@@ -43,7 +43,15 @@
                                 <td>{{ $order->name }}</td>
                                 <td>{{ date('d M Y H:i:s', strtotime($order->created_at)) }}</td>
                                 <td>{{ App\Order::getStatusList($order->status) }}</td>
-                                <td></td>
+                                <td>
+                                    <a href="{{ url('/orders/'.$order->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
+                                    <form action="{{ url('/orders/'.$order->id.'') }}" method="post" style="display:inline">
+                                        {!! csrf_field() !!}
+                                        {!! method_field('DELETE') !!}
+
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i></button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     @endif
@@ -51,4 +59,5 @@
             </table>
         </div>
     </div>
+    {!! $orders->appends(['keyword' => $keyword])->links() !!}
 @endsection

@@ -22,7 +22,7 @@ class Order extends Model
     const ID_KP = 'kartu_pelajar';
     const ID_LAINNYA = 'lainnya';
 
-    protected $fillable = ['name', 'address', 'email', 'handphone', 'id_type', 'id_no', 'quantity'];
+    protected $fillable = ['name', 'address', 'email', 'handphone', 'id_type', 'id_no', 'quantity', 'type_id'];
 
     /**
     * Relation to Ticket model

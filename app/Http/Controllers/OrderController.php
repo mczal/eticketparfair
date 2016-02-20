@@ -33,14 +33,18 @@ class OrderController extends Controller
     * @param Request
     */
     public function index(Request $request){
-        $orders = Order::paginate(15);
+        $keyword = $request->keyword;
+        $orders = $this->orders->getAllFiltered($keyword);
 
         return view('orders.index', [
-            'keyword' => '',
+            'keyword' => $keyword,
             'orders' => $orders,
         ]);
     }
 
+    /**
+    * Show create form
+    */
     public function create(){
         $types = $this->types->getAllActive();
         return view('orders.create', [
@@ -48,12 +52,28 @@ class OrderController extends Controller
         ]);
     }
 
-    public function edit(){
-
+    /**
+    * Show data id
+    */
+    public function show($id){
+        $order = $this->getModel($id);
+        return view('orders.show', [
+            'order' => $order,
+        ]);
     }
 
-    public function destroy(){
+    public function edit(){
+        //saat ini belum dibutuhkan
+    }
 
+    /**
+    * Delete the selected data
+    */
+    public function destroy(){
+        $order = $this->getModel($id);
+        $order->delete();
+
+        return redirect('/orders')->with('success_message', 'Order <b>#' . $type->no_order . '</b> was deleted.');
     }
 
     /**
@@ -78,10 +98,9 @@ class OrderController extends Controller
         $order->no_order = $this->orders->generateNoOrder();
         $order->expired_date = date('Y-m-d H:i:s', time() + (3600 * 10)); //10 hours
         $order->status = 1;
-        $order->total_price = ($type->price * $order->quantity) + rand(1, 999); //TODO: count the total
+        $order->total_price = ($type->price * $order->quantity) + rand(1, 999);
         $order->save();
 
-        //TODO: sent email to customer
         Mail::send('emails.order', ['order' => $order], function($m) use ($order){
             $m->from('wilianto.indra@gmail.com', 'Parahyangan Fair');
             $m->to($order->email, $order->name);
@@ -89,5 +108,19 @@ class OrderController extends Controller
         });
 
         return redirect('/orders')->with('success_message', 'Order #<b>' . $order->no_order . '</b> was created.');
+    }
+
+    /**
+    * Get order model by Id
+    * @return Order
+    */
+    private function getModel($id){
+        $model = $this->orders->findById($id);
+
+        if($model === null){
+            abort(404);
+        }
+
+        return $model;
     }
 }
