@@ -37,4 +37,15 @@ class OrderRepositories{
 
         return $orders;
     }
+
+    /**
+    * Get all datas which are expire
+    * @return Order[]
+    */
+    public function getAllExpire(){
+        $orders = Order::where('expired_date', '<=', date('Y-m-d H:i:s'))
+                    ->where('status', Order::STATUS_ORDERED)
+                    ->get();
+        return $orders;
+    }
 }

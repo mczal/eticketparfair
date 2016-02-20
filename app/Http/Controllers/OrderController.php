@@ -129,6 +129,26 @@ class OrderController extends Controller
     }
 
     /**
+    * Cancel every order which expire and detach their tickets
+    */
+    public function cancel(){
+        //TODO: find more effisien query technique
+        $orders = $this->orders->getAllExpire();
+        foreach($orders as $order){
+            $order->status = Order::STATUS_EXPIRE;
+            foreach($order->tickets as $ticket){
+                $ticket->order_date = NULL;
+                $ticket->order()->dissociate();
+                $ticket->save();
+            }
+            $order->save();
+            echo "ID #{$order->no_order} is expire. <br>";
+
+            //TODO: send email to customer, is it need?
+        }
+    }
+
+    /**
     * Get order model by Id
     * @return Order
     */
