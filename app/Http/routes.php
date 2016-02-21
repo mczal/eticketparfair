@@ -35,4 +35,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('tickets', 'TicketController');
     Route::resource('types', 'TypeController');
     Route::resource('confirmations', 'ConfirmationController');
+    Route::post('confirmations/validate','ConfirmationController@validateOrder');
 });

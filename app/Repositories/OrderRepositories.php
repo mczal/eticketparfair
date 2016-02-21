@@ -48,4 +48,15 @@ class OrderRepositories{
                     ->get();
         return $orders;
     }
+
+    /**
+    *Get all datas that not expire
+    *@return Order[]
+    */
+    public function getAllActive(){
+      $orders = Order::where('expired_date', '>', date('Y-m-d H-i-s'))
+                    ->where('status', Order::STATUS_ORDERED)
+                    ->get();
+      return $orders;
+    }
 }

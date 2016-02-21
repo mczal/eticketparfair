@@ -7,14 +7,18 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\ConfirmationRepositories;
+use App\Repositories\OrderRepositories;
 use App\Confirmation;
 
 class ConfirmationController extends Controller
 {
     protected $confirmations;
+    protected $orders;
 
-    public function __construct(ConfirmationRepositories $confirmations){
+    public function __construct(ConfirmationRepositories $confirmations, OrderRepositories $orders){
         $this->confirmations = $confirmations;
+        $this->orders = $orders;
+        //dd($this->orders->getAllActive());
     }
 
     /**
@@ -22,10 +26,16 @@ class ConfirmationController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-        $confirmations = Confirmation::paginate(30);
+        //$confirmation = Confirmation::where(['id' => 2])->first();
 
+        //dd($confirmation->order->tickets);
+        //dd($confirmation);
+        //--
+        $status = $request->status;
+        $confirmations = $this->confirmations->getAllFiltered($status);
+        //dd($confirmations);
         return view('confirmations.index',[
             'confirmations' => $confirmations,
         ]);
@@ -38,7 +48,9 @@ class ConfirmationController extends Controller
 	 */
 	public function create()
 	{
-        return view('confirmations.create');
+        return view('confirmations.create',[
+          'orders' => $this->orders->getAllActive(),
+        ]);
 	}
 
 	/**
@@ -61,6 +73,12 @@ class ConfirmationController extends Controller
         $confirmation->nama_bank = $request->nama_bank;
         $confirmation->total_transfer = $request->total_transfer;
         $confirmation->save();
+
+        /*Mail::send('emails.order', ['order' => $order], function($m) use ($order){
+            $m->from('wilianto.indra@gmail.com', 'Parahyangan Fair');
+            $m->to($order->email, $order->name);
+            $m->subject('Thank you for order');
+        });*/
 
         return redirect('/confirmations')->with('success_message', 'confirmation was created');
 	}
@@ -105,14 +123,12 @@ class ConfirmationController extends Controller
             'no_rekening' => 'required',
             'nama_bank' => 'required',
             'total_transfer' => 'required',
-            'order_id' => 'required',
         ]);
 
         $confirmation = Confirmation::where(['id' => $id])->first();
         $confirmation->no_rekening = $request->no_rekening;
         $confirmation->nama_bank = $request->nama_bank;
         $confirmation->total_transfer = $request->total_transfer;
-        $confirmation->order_id = $request->order_id;
         $confirmation->save();
 
         return redirect('/confirmations')->with('success_message', 'Confirmation id:<b>' . $confirmation->id . '</b> was saved.');
@@ -131,4 +147,27 @@ class ConfirmationController extends Controller
 
         return redirect('/confirmations')->with('success_message', 'Confirmation id:<b>' . $confirmation->id . '</b> was deleted.');
 	}
+
+  /**
+	 * Validate Order (set )
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+   public function validateOrder(Request $request){
+     $confirmation = Confirmation::where(['id' => $request->id])->first();
+     $order = $confirmation->order;
+     $order->status = \App\Order::STATUS_PAID;
+     $order->save();
+     //dd($order);
+     foreach($confirmation->order->tickets as $ticket){
+       $ticket->active_date = date('Y-m-d H:i:s');
+       $ticket->save();
+     }
+     $confirmation->status = Confirmation::STATUS_PAID;
+     $confirmation->save();
+     return redirect('/confirmations')->with('success_message', 'Confirmation id:<b>' . $confirmation->id . '</b> was deleted.');
+
+   }
+
 }

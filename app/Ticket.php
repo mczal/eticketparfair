@@ -21,4 +21,13 @@ class Ticket extends Model
     public function type(){
         return $this->belongsTo(Type::class);
     }
+
+    /**
+    * Activate ticket paid
+    *eloquent mutator magic
+  *
+  *  public function setActiveDate($value){
+  *    $this->attributes['active_date'] = $value;
+  *  }
+    */
 }

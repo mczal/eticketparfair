@@ -14,6 +14,7 @@ class AlterTableOrders extends Migration
     {
         Schema::table('orders', function($table){
             $table->softDeletes();
+            $table->integer('type_id')->index();
         });
     }
 
