@@ -154,4 +154,43 @@ class TicketController extends Controller
 
         return redirect('/tickets')->with('success_message', 'Ticket id:<b>' . $ticket->id . '</b> was deleted.');
 	}
+
+  //API to Android SECTION
+
+  /**
+	 * get ticket data from unique_code
+	 * @param $unique_id
+	 * @return Response::json
+	 */
+   public function getTicketData($code){
+     $ticket = $this->tickets->findByUniqueCode($code);
+     if($ticket==null || $ticket==undefined || $ticket==''){
+       return response()->json([
+         'error' => 'error',
+       ]);
+     }else{
+       return response()->json($ticket);
+     }
+
+   }
+
+  /**
+	 * set check in attribute on ticket specified by given unique_code to datenow
+	 *
+	 * @return Response::json
+	 */
+  public function checkIn(Request $request){
+
+    $this->validate($request, [
+      'unique_code' => 'required',
+    ]);
+
+    $ticket = $this->tickets->findByUniqueCode($request->unique_code);
+    $ticket->check_in_date = date('Y-m-d H:i:s');
+    $ticket->save();
+    return response()->json([
+      'error' => 'success',
+    ]);
+  }
+
 }

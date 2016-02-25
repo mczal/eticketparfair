@@ -25,22 +25,16 @@
             </div>
 
             <div class="form-group">
-                <label for="total-transfer" class="col-md-4 control-label">Nama Bank</label>
+                <label for="total-transfer" class="col-md-4 control-label">Total Transfer</label>
                 <div class="col-md-6">
                     <input id="total-transfer" type="number" class="form-control" name="total_transfer"/>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="order-id" class="col-md-4 control-label">Nomor Order</label>
+                <label for="no-order" class="col-md-4 control-label">Nomor Order</label>
                 <div class="col-md-6">
-                  <select id="order-id" class="form-control" name="order_id">
-                      <option value=""></option>
-                      @foreach($orders as $order)
-                          <option value="{{ $order->id }}">{{ $order->no_order }}</option>
-                      @endforeach
-                  </select>
-
+                  <input type="text" id="no-order" name="no_order" class="form-control"/>
                 </div>
             </div>
 

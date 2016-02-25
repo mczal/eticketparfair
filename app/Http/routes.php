@@ -36,4 +36,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('types', 'TypeController');
     Route::resource('confirmations', 'ConfirmationController');
     Route::post('confirmations/validate','ConfirmationController@validateOrder');
+
+    //API Android
+    Route::get('tickets/get-data/{code}','TicketController@getTicketData');
+    Route::get('tickets/check-in','TicketController@checkIn');
 });

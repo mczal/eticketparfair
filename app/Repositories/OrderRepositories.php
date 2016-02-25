@@ -30,7 +30,7 @@ class OrderRepositories{
     */
     public function getAllFiltered($keyword = ''){
         if(!empty($keyword)){
-            $orders = Order::where('no_order', $keyword)->paginate(10);
+            $orders = Order::where('no_order', $keyword)->first();
         }else{
             $orders = Order::paginate(10);
         }
