@@ -25,6 +25,7 @@ class OrderController extends Controller
     * @return void
     */
     public function __construct(OrderRepositories $orders, TypeRepositories $types){
+        $this->middleware('auth');
         $this->orders = $orders;
         $this->types = $types;
     }

@@ -16,6 +16,7 @@ class ConfirmationController extends Controller
     protected $orders;
 
     public function __construct(ConfirmationRepositories $confirmations, OrderRepositories $orders){
+        $this->middleware('auth');
         $this->confirmations = $confirmations;
         $this->orders = $orders;
         //dd($this->orders->getAllActive());

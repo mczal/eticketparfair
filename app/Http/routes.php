@@ -29,6 +29,10 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
+    // Route::get('/login', 'Auth\AuthController@showLoginForm');
+    // Route::post('/login', 'Auth\AuthController@login');
+    // Route::get('/logout', 'Auth\AuthController@logout');
+    Route::auth();
     //require auth
     Route::get('orders/cancel', 'OrderController@cancel');
     Route::resource('orders', 'OrderController');
