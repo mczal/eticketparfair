@@ -20,6 +20,7 @@ class TypeController extends Controller
      * @return void
      */
      public function __construct(TypeRepositories $types){
+         $this->middleware('auth');
          $this->types = $types;
      }
 

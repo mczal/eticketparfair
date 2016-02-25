@@ -16,6 +16,7 @@ class TicketController extends Controller
     protected $types;
 
     public function __construct(TicketRepositories $tickets, TypeRepositories $types){
+        $this->middleware('auth');
         $this->tickets = $tickets;
         $this->types = $types;
     }
