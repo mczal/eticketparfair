@@ -43,5 +43,5 @@ Route::group(['middleware' => ['web']], function () {
 
     //API Android
     Route::get('tickets/get-data/{code}','TicketController@getTicketData');
-    Route::get('tickets/check-in','TicketController@checkIn');
+    Route::post('tickets/check-in','TicketController@checkIn');
 });
