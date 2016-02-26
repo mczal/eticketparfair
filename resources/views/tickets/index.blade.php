@@ -14,29 +14,28 @@
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th>id</th>
-                <th>unique_code</th>
-                <th>order_id</th>
-                <th>type_id</th>
-                <th>order_date</th>
-                <th>active_date</th>
-                <th>check_in_date</th>
-                <th>operation</th>
+                <th>Code</th>
+                <th>Order</th>
+                <th>Type</th>
+                <th>Order Date</th>
+                <th>Active Date</th>
+                <th>Check-in Date</th>
+                <th></th>
               </tr>
             </thead>
             @if ( count($tickets) > 0 )
             <tbody>
               @foreach($tickets as $ticket)
                   <tr>
-                    <td>{{$ticket->id}}</td>
                     <td>{{$ticket->unique_code}}</td>
-                    <td>{{ $ticket->order ? $ticket->order->name: '' }}</td>
+                    <td>{!! $ticket->order ? ($ticket->order->no_order.'<br>'.$ticket->order->name) : '' !!}</td>
                     <td>{{$ticket->type->name}}</td>
                     <td>{{$ticket->order_date}}</td>
                     <td>{{$ticket->active_date}}</td>
                     <td>{{$ticket->check_in_date}}</td>
                     <!--view edit delete-->
                     <td>
+                      <a href="{{url('/tickets/print/'.$ticket->id)}}" class="btn btn-default btn-primary" target="_blank"><i class="fa fa-print"></i></a>
                       <a href="{{url('/tickets/'.$ticket->id)}}" class="btn btn-default"><i class="fa fa-eye"></i></a>
                       <a href="{{url('/tickets/'.$ticket->id.'/edit')}}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
                       <form action="{{ url('/tickets/'.$ticket->id) }}" method="post" style="display:inline">

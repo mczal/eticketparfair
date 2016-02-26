@@ -20,13 +20,24 @@
               </div>
           </div>
 
+          <!-- SIGNATURE -->
+          <div class="row">
+              <div class="form-group">
+                  <label for="order-signature" class="col-sm-2 control-label">Signature</label>
+
+                  <div class="col-sm-6">
+                      {{ strtoupper($ticket->generateBarcode()) }}
+                  </div>
+              </div>
+          </div>
+
           <!-- Ticket order id -->
           <div class="row">
               <div class="form-group">
                   <label for="ticket-order-id" class="col-sm-2 control-label">Order Id</label>
 
                   <div class="col-sm-3">
-                      {{ $ticket->order_id }}
+                      {{ $ticket->order->no_order }}
                   </div>
               </div>
           </div>
@@ -36,7 +47,7 @@
               <div class="form-group">
                   <label for="ticket-type-id" class="col-sm-2 control-label">Type Id</label>
                   <div class="col-sm-3">
-                      {{ $ticket->type_id }}
+                      {{ $ticket->type->name }}
                   </div>
               </div>
           </div>
@@ -74,7 +85,7 @@
           <!-- Control -->
           <div class="row">
               <div class="form-group">
-                  <div class="col-sm-6 col-sm-offset-1">
+                  <div class="col-sm-6 col-sm-offset-2">
                       <a href="{{ url('/tickets/' . $ticket->id . '/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
                       <form action="{{ url('/tickets/' . $ticket->id) }}" method="post" style="display: inline">
                           {!! csrf_field() !!}

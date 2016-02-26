@@ -37,6 +37,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('orders/cancel', 'OrderController@cancel');
     Route::resource('orders', 'OrderController');
     Route::resource('tickets', 'TicketController');
+    Route::get('tickets/print/{unique_code}', 'TicketController@printTicket');
     Route::resource('types', 'TypeController');
     Route::resource('confirmations', 'ConfirmationController');
     Route::post('confirmations/validate','ConfirmationController@validateOrder');
