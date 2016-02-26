@@ -71,11 +71,12 @@ class OrderController extends Controller
     /**
     * Delete the selected data
     */
-    public function destroy(){
+    public function destroy($id){
+
         $order = $this->getModel($id);
         $order->delete();
 
-        return redirect('/orders')->with('success_message', 'Order <b>#' . $type->no_order . '</b> was deleted.');
+        return redirect('/orders')->with('success_message', 'Order <b>#' . $order->no_order . '</b> was deleted.');
     }
 
     /**

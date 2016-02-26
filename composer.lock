@@ -1278,6 +1278,7 @@
                 "shell"
             ],
             "time": "2016-02-20 16:27:05"
+<<<<<<< HEAD
         },
         {
             "name": "simplesoftwareio/simple-qrcode",
@@ -1329,6 +1330,8 @@
                 "wrapper"
             ],
             "time": "2016-01-31 02:09:25"
+=======
+>>>>>>> ade704cecaed2c12bc41962bb972cca61e63c284
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -65,11 +65,13 @@ class ConfirmationController extends Controller
             'no_rekening' => 'required',
             'nama_bank' => 'required',
             'total_transfer' => 'required',
-            'order_id' => 'required',
+            'no_order' => 'required',
         ]);
 
+        $order = $this->orders->getAllFiltered($request->no_order);
+
         $confirmation = new Confirmation;
-        $confirmation->order_id = $request->order_id;
+        $confirmation->order_id = $order->id;
         $confirmation->no_rekening = $request->no_rekening;
         $confirmation->nama_bank = $request->nama_bank;
         $confirmation->total_transfer = $request->total_transfer;

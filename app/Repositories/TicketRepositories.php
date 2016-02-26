@@ -19,6 +19,10 @@
                     ->get();
     }
 
+    public function findByUniqueCode($unique_code){
+      return Ticket::where('unique_code', $unique_code)->first();
+    }
+
   }
 
  ?>
