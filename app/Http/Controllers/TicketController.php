@@ -173,14 +173,14 @@ class TicketController extends Controller
             'ticket' => $ticket,
         ])->setPaper('a5', 'landscape');
         // return $pdf->download("{$ticket->unique_code}.pdf");
-        // return $pdf->stream();
+        return $pdf->stream();
 
-        Mail::send('emails.order', ['order' => $ticket->order], function($m) use ($pdf, $ticket){
-            $m->from('wilianto.indra@gmail.com', 'Ticket Parahyangan Fair');
-            $m->to($ticket->order->email, $ticket->order->name);
-            $m->subject('Thank you for order');
-            $m->attachData($pdf->output(), 'test.pdf');
-        });
+        // Mail::send('emails.order', ['order' => $ticket->order], function($m) use ($pdf, $ticket){
+        //     $m->from('wilianto.indra@gmail.com', 'Ticket Parahyangan Fair');
+        //     $m->to($ticket->order->email, $ticket->order->name);
+        //     $m->subject('Thank you for order');
+        //     $m->attachData($pdf->output(), 'test.pdf');
+        // });
 
         // return view('tickets.print', [
         //     'ticket' => $ticket,

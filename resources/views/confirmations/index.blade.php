@@ -47,7 +47,7 @@
               <button class="btn btn-default" disabled>Valid</button>
               @endif
             </td>
-            <td>{{$confirmation->order['name']}}</td>
+            <td><a href="{{ url('/orders/' . $confirmation->order->id) }}" target="_blank">{!! $confirmation->order->no_order . '<br>' . $confirmation->order->name !!}</a></td>
             <td>{{$confirmation->no_rekening}}</td>
             <td>{{$confirmation->nama_bank}}</td>
             <td>{{number_format($confirmation->total_transfer)}}</td>

@@ -19,7 +19,7 @@ body {
             </p>
             <table border=0>
                 <tr>
-                    <td>ID</td><td>:</td><td>{{ $ticket->order ? App\Order::getIdTypeList($ticket->order->id_type) . ' / ' . $ticket->order->id_no : 'KTP / 1234050857' }}</td>
+                    <td>ID</td><td>:</td><td>{{ $ticket->order ? App\Order::getIdTypeList($ticket->order->id_type) . ' / ' . $ticket->order->id_no : '- / -' }}</td>
                 </tr>
                 <tr>
                     <td>Name</td><td>:</td><td>{{ $ticket->order ? $ticket->order->name : ' - ' }}</td>

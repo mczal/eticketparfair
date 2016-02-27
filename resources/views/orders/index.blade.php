@@ -24,10 +24,11 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>no_order</th>
-                        <th>name</th>
-                        <th>tgl_order</th>
-                        <th>status</th>
+                        <th>No Order</th>
+                        <th>Name</th>
+                        <th>Tgl Order</th>
+                        <th>Status</th>
+                        <th>Total</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -43,6 +44,7 @@
                                 <td>{{ $order->name }}</td>
                                 <td>{{ date('d M Y H:i:s', strtotime($order->created_at)) }}</td>
                                 <td>{{ App\Order::getStatusList($order->status) }}</td>
+                                <td>IDR {{ number_format($order->total_price) }}</td>
                                 <td>
                                     <a href="{{ url('/orders/'.$order->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
                                     <form action="{{ url('/orders/'.$order->id.'') }}" method="post" style="display:inline">
