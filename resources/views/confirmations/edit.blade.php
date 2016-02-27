@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Edit Confirmation ID ' . $confirmation->id)
+@section('header', 'Edit Confirmation')
+@section('subheader', 'ID ' . $confirmation->id)
+
 @section('content')
 <p>
     <a href="{{ url('/confirmations') }}" class="btn btn-primary"><i class="fa fa-bars"></i> View List</a>
@@ -15,22 +19,9 @@
 
             <!--ID LABEL-->
             <div class="form-group">
-                <label for="confirmation-id" class="col-sm-2 control-label">Id</label>
+                <label for="confirmation-id" class="col-sm-2 control-label">ID</label>
                 <div class="col-sm-6">
                     <input readonly type="text" name="id" id="confirmation-id" class="form-control" value="{{ $confirmation->id }}">
-                </div>
-            </div>
-
-            <!-- No Rekening -->
-            <div class="form-group{{ $errors->has('no_rekening') ? ' has-error' : '' }}">
-                <label for="no_rekening" class="col-sm-2 control-label">No. Rekening</label>
-                <div class="col-sm-6">
-                    <input type="text" name="no_rekening" id="no_rekening" class="form-control" value="{{ isset($confirmation->no_rekening) ? $confirmation->no_rekening : '' }}">
-                    @if ($errors->has('no_rekening'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('no_rekening') }}</strong>
-                        </span>
-                    @endif
                 </div>
             </div>
 
@@ -42,6 +33,19 @@
                     @if ($errors->has('nama_bank'))
                         <span class="help-block">
                             <strong>{{ $errors->first('nama_bank') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <!-- No Rekening -->
+            <div class="form-group{{ $errors->has('no_rekening') ? ' has-error' : '' }}">
+                <label for="no_rekening" class="col-sm-2 control-label">No. Rekening</label>
+                <div class="col-sm-6">
+                    <input type="text" name="no_rekening" id="no_rekening" class="form-control" value="{{ isset($confirmation->no_rekening) ? $confirmation->no_rekening : '' }}">
+                    @if ($errors->has('no_rekening'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('no_rekening') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -62,7 +66,7 @@
 
 
             <div class="form-group">
-                <div class="col-sm-3 col-sm-offset-1">
+                <div class="col-sm-3 col-sm-offset-2">
                     <button type="submit" name="button" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                 </div>
             </div>

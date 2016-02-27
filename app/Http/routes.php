@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return redirect('/orders'); //need dashboard controller
 });
 
 

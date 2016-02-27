@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('title', 'Confirmation ID ' . $confirmation->id)
+@section('header', 'Confirmation')
+@section('subheader', 'ID ' . $confirmation->id)
 @section('content')
 <p>
     <a href="{{ url('/confirmations' ) }}" class="btn btn-primary"><i class="fa fa-bars"></i> View List</a>
@@ -26,18 +28,7 @@
                 <label for="order-id" class="col-sm-2 control-label">Order Id</label>
 
                 <div class="col-sm-6">
-                    {{ $confirmation->order_id }}
-                </div>
-            </div>
-        </div>
-
-        <!-- No Rekening -->
-        <div class="row">
-            <div class="form-group">
-                <label for="no_rekening" class="col-sm-2 control-label">No Rekening</label>
-
-                <div class="col-sm-6">
-                    {{ $confirmation->no_rekening }}
+                    <a href="{{ url('/orders/' . $confirmation->order->id) }}">{{ $confirmation->order->no_order }}</a>
                 </div>
             </div>
         </div>
@@ -53,13 +44,24 @@
             </div>
         </div>
 
+        <!-- No Rekening -->
+        <div class="row">
+            <div class="form-group">
+                <label for="no_rekening" class="col-sm-2 control-label">No Rekening</label>
+
+                <div class="col-sm-6">
+                    {{ $confirmation->no_rekening }}
+                </div>
+            </div>
+        </div>
+
         <!-- Total Transfer -->
         <div class="row">
             <div class="form-group">
                 <label for="total-transfer" class="col-sm-2 control-label">Total Transfer</label>
 
                 <div class="col-sm-6">
-                    {{ number_format($confirmation->total_transfer) }}
+                    IDR {{ number_format($confirmation->total_transfer) }}
                 </div>
             </div>
         </div>
@@ -89,7 +91,7 @@
         <!-- Control -->
         <div class="row">
             <div class="form-group">
-                <div class="col-sm-6 col-sm-offset-1">
+                <div class="col-sm-6 col-sm-offset-2">
                     <a href="{{ url('/confirmations/' . $confirmation->id . '/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
                     <form action="{{ url('/confirmations/' . $confirmation->id) }}" method="post" style="display: inline">
                         {!! csrf_field() !!}

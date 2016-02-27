@@ -65,7 +65,7 @@
                         <label for="order-total" class="col-sm-2 control-label">Total</label>
 
                         <div class="col-sm-6">
-                            {{ number_format($order->total_price) }}
+                            IDR {{ number_format($order->total_price) }}
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
+                                    <th width="10px">No.</th>
                                     <th width="200px">Code</th>
                                     <th width="300px">Signature</th>
                                     <th></th>

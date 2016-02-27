@@ -48,7 +48,7 @@
         <footer class="main-footer" style="margin-left: 0px">
             <!-- To the right -->
             <div class="pull-right hidden-xs">
-                Powered by: Direktorat IT / Kominfo / LKM 2015-2016
+                Powered by: Direktorat Jenderal IT / Kominfo / LKM 2015-2016
             </div>
             <!-- Default to the left -->
             <strong>Copyright © 2016 <a href="#">Parahyangan Fair</a>.</strong> All rights reserved.
