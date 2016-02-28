@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use PDF;
+use QrCode;
+use Mail;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Ticket;
@@ -44,7 +47,7 @@ class TicketController extends Controller
     *
     */
     private function generateCode(){
-        $code = "0123456789ABCEDFGHIJKLMNOPQRSTUVWXZ";
+        $code = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $result = "";
         for($i=0;$i<10;$i++){
             $result.=$code[rand(0,35)];
@@ -73,6 +76,7 @@ class TicketController extends Controller
             $ticket->type_id = $ticketType;
             $ticket->order_id = 'null';
             $ticket->save();
+            QrCode::format('png')->size(400)->generate($ticket->unique_code, '../public/qrcodes/'.$ticket->generateBarcode().'.png');
         }
 
         return redirect('/tickets')->with('success_message', '<b>'.$amount.'</b> tickets was created.');
@@ -156,6 +160,33 @@ class TicketController extends Controller
         return redirect('/tickets')->with('success_message', 'Ticket id:<b>' . $ticket->id . '</b> was deleted.');
 	}
 
+    /**
+     * Print e-ticket
+     *
+     * @param Request $request
+	 * @return Response
+     */
+    public function printTicket(Request $request){
+        $ticket = Ticket::find($request->unique_code);
+
+        $pdf = PDF::loadView('tickets.print', [
+            'ticket' => $ticket,
+        ])->setPaper('a5', 'landscape');
+        // return $pdf->download("{$ticket->unique_code}.pdf");
+        return $pdf->stream();
+
+        // Mail::send('emails.order', ['order' => $ticket->order], function($m) use ($pdf, $ticket){
+        //     $m->from('wilianto.indra@gmail.com', 'Ticket Parahyangan Fair');
+        //     $m->to($ticket->order->email, $ticket->order->name);
+        //     $m->subject('Thank you for order');
+        //     $m->attachData($pdf->output(), 'test.pdf');
+        // });
+
+        // return view('tickets.print', [
+        //     'ticket' => $ticket,
+        // ]);
+    }
+
   //API to Android SECTION
 
   /**
@@ -193,5 +224,4 @@ class TicketController extends Controller
       'error' => 'success',
     ]);
   }
-
 }

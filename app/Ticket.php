@@ -21,6 +21,12 @@ class Ticket extends Model
     public function type(){
         return $this->belongsTo(Type::class);
     }
+    /**
+     * Generate hashed barcode name
+     */
+    public function generateBarcode(){
+        return md5($this->unique_code . '-' . $this->id);
+    }
 
     /**
     * Activate ticket paid

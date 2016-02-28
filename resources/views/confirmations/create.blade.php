@@ -11,16 +11,16 @@
             {!! csrf_field() !!}
 
             <div class="form-group">
-                <label for="no-rek" class="col-md-4 control-label">Nomor Rekening</label>
+                <label for="bank" class="col-md-4 control-label">Nama Bank</label>
                 <div class="col-md-6">
-                    <input id="no-rek" type="text" class="form-control" name="no_rekening"/>
+                    <input id="bank" type="text" class="form-control" name="nama_bank">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="bank" class="col-md-4 control-label">Nama Bank</label>
+                <label for="no-rek" class="col-md-4 control-label">Nomor Rekening</label>
                 <div class="col-md-6">
-                    <input id="bank" type="text" class="form-control" name="nama_bank">
+                    <input id="no-rek" type="text" class="form-control" name="no_rekening"/>
                 </div>
             </div>
 

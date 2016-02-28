@@ -65,7 +65,7 @@
                         <label for="order-total" class="col-sm-2 control-label">Total</label>
 
                         <div class="col-sm-6">
-                            {{ number_format($order->total_price) }}
+                            IDR {{ number_format($order->total_price) }}
                         </div>
                     </div>
                 </div>
@@ -141,4 +141,42 @@
             </div>
         </div>
     </div>
+    @if($order->status == App\Order::STATUS_PAID)
+    <div class="box box-solid">
+        <div class="box-header">
+            <h3 class="box-title">Tickets</h3>
+        </div>
+        <div class="box-body text-left">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th width="10px">No.</th>
+                                    <th width="200px">Code</th>
+                                    <th width="300px">Signature</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{--*/ $i = 1 /*--}}
+                                @foreach($order->tickets as $ticket)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $ticket->unique_code }}</td>
+                                        <td>{{ strtoupper($ticket->generateBarcode()) }}</td>
+                                        <td>
+                                            <a href="{{ url('/tickets/print/' . $ticket->id) }}" target="_blank"><span class="fa fa-print"></span></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 @endsection
