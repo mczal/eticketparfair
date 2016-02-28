@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('layouts.app');
 });
 
+//USER web
+
+Route::get('orders/register',function(){
+  return view('orders.register');
+});
 
 
 /*
@@ -44,4 +49,5 @@ Route::group(['middleware' => ['web']], function () {
     //API Android
     Route::get('tickets/get-data/{code}','TicketController@getTicketData');
     Route::post('tickets/check-in','TicketController@checkIn');
+
 });
