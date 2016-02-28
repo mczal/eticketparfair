@@ -23,6 +23,12 @@
       return Ticket::where('unique_code', $unique_code)->first();
     }
 
+    public function countTicketsRemaining($type_id){
+        return Ticket::where('type_id', $type_id)
+                    ->where('order_date', NULL)
+                    ->count();
+    }
+
   }
 
  ?>

@@ -11,12 +11,14 @@ use App\Order;
 use App\Ticket;
 use App\Repositories\OrderRepositories;
 use App\Repositories\TypeRepositories;
+use App\Repositories\TicketRepositories;
 
 class OrderController extends Controller
 {
 
     protected $orders;
     protected $types;
+    protected $tickets;
 
     /**
     * Create a new controller instance.
@@ -24,10 +26,11 @@ class OrderController extends Controller
     * @param  OrderRepositories  $orders
     * @return void
     */
-    public function __construct(OrderRepositories $orders, TypeRepositories $types){
+    public function __construct(OrderRepositories $orders, TypeRepositories $types, TicketRepositories $tickets){
         $this->middleware('auth');
         $this->orders = $orders;
         $this->types = $types;
+        $this->tickets = $tickets;
     }
 
     /**
@@ -97,7 +100,11 @@ class OrderController extends Controller
         //find type
         $type = $this->types->findById($request->type_id);
 
-        //TODO: check ticket remaining
+        $remaining_tickets = $this->tickets->countTicketsRemaining($type->id);
+
+        if($remaining_tickets < $request->quantity){
+            return redirect('/orders/create')->with('error_message', 'Number of tickets remaining: <b>' . $remaining_tickets . '</b>');
+        }
 
         //save order
         $order = new Order;

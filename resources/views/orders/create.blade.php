@@ -15,6 +15,7 @@
         <div class="box-body text-left">
             <form class="form-horizontal" action="{{ url('/orders') }}" method="post">
                 {!! csrf_field() !!}
+                @include('commons.error')
                 @include('orders._form')
 
                 <div class="form-group">
