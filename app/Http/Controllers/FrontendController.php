@@ -8,14 +8,14 @@ use Mail;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\Confirmation;
 use App\Ticket;
 use App\Repositories\OrderRepositories;
 use App\Repositories\TypeRepositories;
 use App\Repositories\TicketRepositories;
 
-class OrderController extends Controller
+class FrontendController extends Controller
 {
-
     protected $orders;
     protected $types;
     protected $tickets;
@@ -27,65 +27,28 @@ class OrderController extends Controller
     * @return void
     */
     public function __construct(OrderRepositories $orders, TypeRepositories $types, TicketRepositories $tickets){
-        $this->middleware('auth');
         $this->orders = $orders;
         $this->types = $types;
         $this->tickets = $tickets;
     }
 
-    /**
-    * Types list view
-    * @param Request
-    */
-    public function index(Request $request){
-        $keyword = $request->keyword;
-        $orders = $this->orders->getAllFiltered($keyword);
+    public function welcome(){
+        return view('frontend.welcome');
+    }
 
-        return view('orders.index', [
-            'keyword' => $keyword,
-            'orders' => $orders,
+    public function buy(){
+        $remaining_tickets = $this->tickets->countTicketsRemaining(1);
+        return view('frontend.register', [
+            'remaining_tickets' => $remaining_tickets,
         ]);
     }
 
-    /**
-    * Show create form
-    */
-    public function create(){
-        $types = $this->types->getAllActive();
-        return view('orders.create', [
-            'types' => $types,
-        ]);
+    public function confirmation(){
+        return view('frontend.confirmation');
     }
 
-    /**
-    * Show data id
-    */
-    public function show($id){
-        $order = $this->getModel($id);
-        return view('orders.show', [
-            'order' => $order,
-        ]);
-    }
+    public function buyStore(Request $request){
 
-    public function edit(){
-        //saat ini belum dibutuhkan
-    }
-
-    /**
-    * Delete the selected data
-    */
-    public function destroy($id){
-
-        $order = $this->getModel($id);
-        $order->delete();
-
-        return redirect('/orders')->with('success_message', 'Order <b>#' . $order->no_order . '</b> was deleted.');
-    }
-
-    /**
-    * Process create form
-    */
-    public function store(Request $request){
         $this->validate($request, [
             'type_id' => 'required|integer',
             'name' => 'required',
@@ -100,7 +63,7 @@ class OrderController extends Controller
         $remaining_tickets = $this->tickets->countTicketsRemaining($type->id);
 
         if($remaining_tickets < $request->quantity){
-            return redirect('/orders/create')->with('error_message', 'Number of tickets remaining: <b>' . $remaining_tickets . '</b>');
+            return redirect('/buy')->with('error_message', 'Number of tickets remaining: <span id="first">' . $remaining_tickets . '</span>');
         }
 
         //save order
@@ -131,40 +94,39 @@ class OrderController extends Controller
             $m->subject('Thank you for order');
         });
 
-        return redirect('/orders')->with('success_message', 'Order #<b>' . $order->no_order . '</b> was created.');
+        return view('frontend.register_success', [
+            'email' => $order->email,
+        ]);
     }
 
-    /**
-    * Cancel every order which expire and detach their tickets
-    */
-    public function cancel(){
-        //TODO: find more effisien query technique
-        $orders = $this->orders->getAllExpire();
-        foreach($orders as $order){
-            $order->status = Order::STATUS_EXPIRE;
-            foreach($order->tickets as $ticket){
-                $ticket->order_date = NULL;
-                $ticket->order()->dissociate();
-                $ticket->save();
-            }
-            $order->save();
-            echo "ID #{$order->no_order} is expire. <br>";
+    public function confirmationStore(Request $request){
+        $this->validate($request,[
+            'no_rekening' => 'required',
+            'nama_bank' => 'required',
+            'name' => 'required',
+            'total_transfer' => 'required',
+            'no_order' => 'required',
+        ]);
 
-            //TODO: send email to customer, is it need?
-        }
-    }
+        $order = $this->orders->findByNo($request->no_order);
 
-    /**
-    * Get order model by Id
-    * @return Order
-    */
-    private function getModel($id){
-        $model = $this->orders->findById($id);
-
-        if($model === null){
-            abort(404);
+        if($order === null){
+            return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> not found');
+        }elseif($order->status == Order::STATUS_EXPIRE){
+            return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> was expire');
+        }elseif($order->status == Order::STATUS_PAID){
+            return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> was paid');
         }
 
-        return $model;
+        $confirmation = new Confirmation;
+        $confirmation->order_id = $order->id;
+        $confirmation->no_rekening = $request->no_rekening;
+        $confirmation->nama_bank = $request->nama_bank;
+        $confirmation->total_transfer = $request->total_transfer;
+        $confirmation->save();
+
+        return view('frontend.confirmation_success', [
+            'email' => $confirmation->order->email,
+        ]);
     }
 }

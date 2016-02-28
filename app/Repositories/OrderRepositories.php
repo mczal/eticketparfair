@@ -25,6 +25,16 @@ class OrderRepositories{
     }
 
     /**
+    * Find order by number
+    * @param $no string
+    * @return Order
+    */
+    public function findByNo($no){
+        $order = Order::where(['no_order' => $no])->first();
+        return $order;
+    }
+
+    /**
     * Get all data by selected filter and pagination
     * @return Order[]
     */

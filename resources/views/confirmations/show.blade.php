@@ -36,7 +36,7 @@
         <!-- Nama Bank -->
         <div class="row">
             <div class="form-group">
-                <label for="nama-bank" class="col-sm-2 control-label">Nama Bank</label>
+                <label for="nama-bank" class="col-sm-2 control-label">Bank</label>
 
                 <div class="col-sm-6">
                     {{ $confirmation->nama_bank }}
@@ -51,6 +51,17 @@
 
                 <div class="col-sm-6">
                     {{ $confirmation->no_rekening }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Nama di Bank -->
+        <div class="row">
+            <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">Nama di Bank</label>
+
+                <div class="col-sm-6">
+                    {{ $confirmation->name }}
                 </div>
             </div>
         </div>

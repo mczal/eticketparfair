@@ -19,16 +19,13 @@ body {
             </p>
             <table border=0>
                 <tr>
-                    <td>ID</td><td>:</td><td>{{ $ticket->order ? App\Order::getIdTypeList($ticket->order->id_type) . ' / ' . $ticket->order->id_no : '- / -' }}</td>
+                    <td>ID</td><td>:</td><td>{{ $ticket->order ? $ticket->order->id_no : ' - ' }}</td>
                 </tr>
                 <tr>
                     <td>Name</td><td>:</td><td>{{ $ticket->order ? $ticket->order->name : ' - ' }}</td>
                 </tr>
                 <tr>
                     <td>Email</td><td>:</td><td>{{ $ticket->order ? $ticket->order->email : ' - ' }}</td>
-                </tr>
-                <tr>
-                    <td>Phone</td><td>:</td><td>{{ $ticket->order ? $ticket->order->handphone : ' - ' }}</td>
                 </tr>
             </table>
         </td>

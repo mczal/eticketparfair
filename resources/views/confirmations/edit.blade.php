@@ -27,7 +27,7 @@
 
             <!-- Nama Bank -->
             <div class="form-group{{ $errors->has('nama_bank') ? ' has-error' : '' }}">
-                <label for="nama_bank" class="col-sm-2 control-label">Nama Bank</label>
+                <label for="nama_bank" class="col-sm-2 control-label">Bank</label>
                 <div class="col-sm-6">
                     <input type="text" name="nama_bank" id="nama_bank" class="form-control" value="{{ isset($confirmation->nama_bank) ? $confirmation->nama_bank : '' }}">
                     @if ($errors->has('nama_bank'))
@@ -46,6 +46,19 @@
                     @if ($errors->has('no_rekening'))
                         <span class="help-block">
                             <strong>{{ $errors->first('no_rekening') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Nama Bank -->
+            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                <label for="name" class="col-sm-2 control-label">Nama di Bank</label>
+                <div class="col-sm-6">
+                    <input type="text" name="name" id="name" class="form-control" value="{{ isset($confirmation->name) ? $confirmation->name : '' }}">
+                    @if ($errors->has('name'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('name') }}</strong>
                         </span>
                     @endif
                 </div>

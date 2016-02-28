@@ -7,11 +7,12 @@
 @section('content')
 <div class="box box-solid">
     <div class="box-body">
+        @include('commons.error')
         <form class="form-horizontal" action={{url('/confirmations')}} role="form" method="POST">
             {!! csrf_field() !!}
 
             <div class="form-group">
-                <label for="bank" class="col-md-4 control-label">Nama Bank</label>
+                <label for="bank" class="col-md-4 control-label">Bank</label>
                 <div class="col-md-6">
                     <input id="bank" type="text" class="form-control" name="nama_bank">
                 </div>
@@ -21,6 +22,13 @@
                 <label for="no-rek" class="col-md-4 control-label">Nomor Rekening</label>
                 <div class="col-md-6">
                     <input id="no-rek" type="text" class="form-control" name="no_rekening"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name" class="col-md-4 control-label">Nama di Bank</label>
+                <div class="col-md-6">
+                    <input id="name" type="text" class="form-control" name="name">
                 </div>
             </div>
 

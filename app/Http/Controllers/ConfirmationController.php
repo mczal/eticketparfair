@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\ConfirmationRepositories;
 use App\Repositories\OrderRepositories;
 use App\Confirmation;
+use App\Order;
 
 class ConfirmationController extends Controller
 {
@@ -66,11 +67,20 @@ class ConfirmationController extends Controller
         $this->validate($request,[
             'no_rekening' => 'required',
             'nama_bank' => 'required',
+            'name' => 'required',
             'total_transfer' => 'required',
             'no_order' => 'required',
         ]);
 
-        $order = $this->orders->getAllFiltered($request->no_order)[0];
+        $order = $this->orders->findByNo($request->no_order);
+
+        if($order === null){
+            return redirect('/confirmations/create')->with('error_message', 'Order <b>#' . $request->no_order . '</b> not found');
+        }elseif($order->status == Order::STATUS_EXPIRE){
+            return redirect('/confirmations/create')->with('error_message', 'Order <b>#' . $request->no_order . '</b> was expire');
+        }elseif($order->status == Order::STATUS_PAID){
+            return redirect('/confirmations/create')->with('error_message', 'Order <b>#' . $request->no_order . '</b> was paid');
+        }
 
         $confirmation = new Confirmation;
         $confirmation->order_id = $order->id;
@@ -85,7 +95,7 @@ class ConfirmationController extends Controller
             $m->subject('Thank you for order');
         });*/
 
-        return redirect('/confirmations')->with('success_message', 'confirmation was created');
+        return redirect('/confirmations')->with('success_message', 'Confirmation was created');
 	}
 
 	/**

@@ -22,7 +22,7 @@
     </head>
     <body>
 
-        <div class = "container" style="padding-top:100px">
+        <div class = "container">
           <!-- HERE-->
           <div class="content-wrapper">
               <!-- Main content -->

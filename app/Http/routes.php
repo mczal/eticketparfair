@@ -11,15 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('/orders'); //need dashboard controller
-});
+Route::get('/', 'FrontendController@welcome');
 
 //USER web
-
-Route::get('orders/register',function(){
-  return view('orders.register');
-});
 
 
 /*
@@ -46,6 +40,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('types', 'TypeController');
     Route::resource('confirmations', 'ConfirmationController');
     Route::post('confirmations/validate','ConfirmationController@validateOrder');
+
+    Route::get('buy', 'FrontendController@buy');
+    Route::post('buy', 'FrontendController@buyStore');
+    Route::get('confirmation', 'FrontendController@confirmation');
+    Route::post('confirmation', 'FrontendController@confirmationStore');
 
     //API Android
     Route::get('tickets/get-data/{code}','TicketController@getTicketData');
