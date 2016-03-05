@@ -91,7 +91,7 @@ class OrderController extends Controller
             'name' => 'required',
             'email' => 'required|unique:orders|email',
             'id_no' => 'required',
-            'quantity' => 'required|integer|min:1|max:3',
+            'quantity' => 'required|integer|min:1',
         ]);
 
         //find type
@@ -122,6 +122,7 @@ class OrderController extends Controller
         foreach($tickets as $ticket){
             $ticket->order()->associate($order);
             $ticket->order_date = date('Y-m-d H:i:s');
+            $ticket->active_date = date('Y-m-d H:i:s');
             $ticket->save();
         }
 

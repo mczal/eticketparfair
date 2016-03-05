@@ -31,20 +31,6 @@
     </div>
 </div>
 
-<!-- Address -->
-<div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-    <label for="order-address" class="col-sm-2 control-label">Address</label>
-
-    <div class="col-sm-6">
-        <textarea name="address" id="order-address" class="form-control">{{ isset($order->address) ? $order->address : old('address') }}</textarea>
-        @if ($errors->has('address'))
-            <span class="help-block">
-                <strong>{{ $errors->first('address') }}</strong>
-            </span>
-        @endif
-    </div>
-</div>
-
 <!-- Email -->
 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
     <label for="order-email" class="col-sm-2 control-label">Email</label>
@@ -54,39 +40,6 @@
         @if ($errors->has('email'))
             <span class="help-block">
                 <strong>{{ $errors->first('email') }}</strong>
-            </span>
-        @endif
-    </div>
-</div>
-
-<!-- Handphone -->
-<div class="form-group{{ $errors->has('handphone') ? ' has-error' : '' }}">
-    <label for="order-handphone" class="col-sm-2 control-label">Handphone</label>
-
-    <div class="col-sm-6">
-        <input type="text" name="handphone" id="order-handphone" class="form-control" value="{{ isset($order->handphone) ? $order->handphone : old('handphone') }}">
-        @if ($errors->has('handphone'))
-            <span class="help-block">
-                <strong>{{ $errors->first('handphone') }}</strong>
-            </span>
-        @endif
-    </div>
-</div>
-
-<!-- ID TYPE -->
-<div class="form-group{{ $errors->has('id_type') ? ' has-error' : '' }}">
-    <label for="order-id_type" class="col-sm-2 control-label">Type ID</label>
-
-    <div class="col-sm-6">
-        <select class="form-control" name="id_type" id="order-id_type">
-            @foreach(App\Order::getIdTypeList() as $key => $type)
-                <option value="{{ $key }}"{{ (isset($order) && $order->id_type == $key) || old('id_type') == $key ? ' selected' : '' }}>{{ $type }}</option>
-            @endforeach
-        </select>
-
-        @if ($errors->has('id_type'))
-            <span class="help-block">
-                <strong>{{ $errors->first('id_type') }}</strong>
             </span>
         @endif
     </div>
@@ -117,8 +70,5 @@
                 <strong>{{ $errors->first('quantity') }}</strong>
             </span>
         @endif
-    </div>
-    <div class="col-sm-2">
-        <p class="control-label" style="text-align: left">Max. 3 Tickets</p>
     </div>
 </div>

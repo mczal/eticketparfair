@@ -12,6 +12,9 @@
 */
 
 Route::get('/', 'FrontendController@welcome');
+Route::get('admin', function(){
+    return redirect('/orders');
+});
 
 //USER web
 
