@@ -69,6 +69,7 @@ class FrontendController extends Controller
         //save order
         $order = new Order;
         $order->fill($request->all());
+        $order->type_id = env('ACTIVE_TICKET_TYPE');
         $order->no_order = $this->orders->generateNoOrder();
         $order->expired_date = date('Y-m-d H:i:s', time() + (3600 * 10)); //10 hours
         $order->status = 1;
@@ -119,6 +120,7 @@ class FrontendController extends Controller
         }
 
         $confirmation = new Confirmation;
+        $confirmation->name = $request->name;
         $confirmation->order_id = $order->id;
         $confirmation->no_rekening = $request->no_rekening;
         $confirmation->nama_bank = $request->nama_bank;

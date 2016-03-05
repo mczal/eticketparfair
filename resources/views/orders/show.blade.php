@@ -15,17 +15,6 @@
         </div>
         <div class="box-body text-left">
             <div class="container">
-                <!-- Type ID -->
-                <div class="row">
-                    <div class="form-group">
-                        <label for="order-id_type" class="col-sm-2 control-label">Type ID</label>
-
-                        <div class="col-sm-6">
-                            {{ App\Order::getIdTypeList($order->id_type) }}
-                        </div>
-                    </div>
-                </div>
-
                 <!-- ID Number -->
                 <div class="row">
                     <div class="form-group">
@@ -81,17 +70,6 @@
                     </div>
                 </div>
 
-                <!-- Address -->
-                <div class="row">
-                    <div class="form-group">
-                        <label for="order-address" class="col-sm-2 control-label">Address</label>
-
-                        <div class="col-sm-6">
-                            {{ $order->address }}
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Email -->
                 <div class="row">
                     <div class="form-group">
@@ -99,17 +77,6 @@
 
                         <div class="col-sm-6">
                             {{ $order->email }}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Handphone -->
-                <div class="row">
-                    <div class="form-group">
-                        <label for="order-handphone" class="col-sm-2 control-label">Handphone</label>
-
-                        <div class="col-sm-6">
-                            {{ $order->handphone }}
                         </div>
                     </div>
                 </div>
