@@ -174,7 +174,7 @@ class TicketController extends Controller
 
         $pdf = PDF::loadView('tickets.print', [
             'ticket' => $ticket,
-        ])->setPaper('a5', 'landscape');
+        ])->setPaper([0, 0, 595.28, 243], 'portrait');
         // return $pdf->download("{$ticket->unique_code}.pdf");
         return $pdf->stream();
 
