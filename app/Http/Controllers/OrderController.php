@@ -167,4 +167,44 @@ class OrderController extends Controller
 
         return $model;
     }
+
+    /**
+    * store order offline ticks
+    *     --order stored with this method with automatically activate the ticket
+    *
+    */
+    public function storeOffline(Request $request){
+      $this->validate($request, [
+          'name' => 'required',
+          'email' => 'required|unique:orders|email',
+          'id_no' => 'required',
+          'unique_code' => 'required',
+      ]);
+
+      $ticket = $this->tickets->findByUniqueCode($request->unique_code);
+      $ticket->active_date=date('Y-m-d H:i:s', time() + (3600 * 10));
+      //$ticket->save();
+
+      $type = $this->types->findById($ticket->type);
+
+      $order = new Order;
+      $order->fill($request->all());
+      $order->no_order = $this->orders->generateNoOrder();
+      $order->expired_date = date('Y-m-d H:i:s', time() + (3600 * 10)); //10 hours
+      $order->status = 2; //langsung aktif
+      $order->quantity = 1;
+      $order->total_price = $type->price;
+
+      $order->save();
+      $tiket->save();
+
+      return redirect('/orders/create-offline')->with('success_message', 'Order #<b>' . $order->no_order . '</b> was created and active.');
+
+    }
+    public function createOffline(){
+      dd('ijal');
+      return view('orders.create-offline');
+    }
+
+
 }

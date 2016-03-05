@@ -12,16 +12,19 @@ use App\Http\Controllers\Controller;
 use App\Ticket;
 use App\Repositories\TicketRepositories;
 use App\Repositories\TypeRepositories;
+use App\Repositories\OrderRepositories;
 
 class TicketController extends Controller
 {
     protected $tickets;
     protected $types;
+    protected $orders;
 
-    public function __construct(TicketRepositories $tickets, TypeRepositories $types){
+    public function __construct(OrderRepositories $orders,TicketRepositories $tickets, TypeRepositories $types){
         $this->middleware('auth');
         $this->tickets = $tickets;
         $this->types = $types;
+        $this->orders = $orders;
     }
 
     public function index()
@@ -189,39 +192,66 @@ class TicketController extends Controller
 
   //API to Android SECTION
 
-  /**
-	 * get ticket data from unique_code
-	 * @param $unique_id
-	 * @return Response::json
-	 */
-   public function getTicketData($code){
-     $ticket = $this->tickets->findByUniqueCode($code);
-     if($ticket==null || $ticket==undefined || $ticket==''){
-       return response()->json([
-         'error' => 'error',
-       ]);
-     }else{
-       return response()->json($ticket);
-     }
-
-   }
+  // /**
+	//  * get ticket data from unique_code
+	//  * @param $unique_id
+	//  * @return Response::json
+	//  */
+  //  public function getTicketData($code){
+  //    $ticket = $this->tickets->findByUniqueCode($code);
+  //    if($ticket==null || $ticket==undefined || $ticket==''){
+  //      return response()->json([
+  //        'error' => 'error',
+  //      ]);
+  //    }else{
+  //      return response()->json($ticket);
+  //    }
+  //  }
 
   /**
 	 * set check in attribute on ticket specified by given unique_code to datenow
 	 *
-	 * @return Response::json
+	 * @return Response::json (ticket data)
 	 */
   public function checkIn(Request $request){
-
+    //dd('ijal');
     $this->validate($request, [
       'unique_code' => 'required',
     ]);
 
     $ticket = $this->tickets->findByUniqueCode($request->unique_code);
-    $ticket->check_in_date = date('Y-m-d H:i:s');
-    $ticket->save();
-    return response()->json([
-      'error' => 'success',
-    ]);
+    if($ticket == null || $ticket == undefined || $ticket == ''){
+      return response()->json([
+        'error' => 'error',
+        'message' => 'ticket not found',
+      ]);
+    }else{
+      if($ticket->order_date == null || $ticket->order_date == undefined || $ticket->order_date == ''){
+        return response()->json([
+          'error' => 'error',
+          'message' => 'ticket haven\'t been ordered ',
+        ]);
+      }else{
+        if($ticket->active_date == null || $ticket->active_date == undefined || $ticket->active_date == ''){
+          return response()->json([
+            'error' => 'error',
+            'message' => 'ticket haven\'t been activate',
+          ]);
+        }else{
+          if($ticket->check_in_date == null || $ticket->check_in_date == undefined || $ticket->check_in_date == ''){
+            $ticket->check_in_date = date('Y-m-d H:i:s');
+            $order = $ticket->order;
+            dd($order);
+            $ticket->save();
+            return response()->json($order);
+          }else{
+            return response()->json([
+              'error' => 'error',
+              'message' => 'someone has already using your ticket',
+            ]);
+          }
+        }
+      }
+    }
   }
 }

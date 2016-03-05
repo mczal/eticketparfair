@@ -27,6 +27,10 @@ Route::get('/', 'FrontendController@welcome');
 |
 */
 
+//testing
+Route::post('orders/store-offline','OrderController@storeOffline');
+Route::get('orders/create-offline','OrderController@createOffline');
+
 Route::group(['middleware' => ['web']], function () {
     // Route::get('/login', 'Auth\AuthController@showLoginForm');
     // Route::post('/login', 'Auth\AuthController@login');

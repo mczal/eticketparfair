@@ -37,7 +37,7 @@ class FrontendController extends Controller
     }
 
     public function buy(){
-        $remaining_tickets = $this->tickets->countTicketsRemaining(1);
+        $remaining_tickets = $this->tickets->countTicketsRemaining(env('ACTIVE_TICKET_TYPE'));
         return view('frontend.register', [
             'remaining_tickets' => $remaining_tickets,
         ]);
