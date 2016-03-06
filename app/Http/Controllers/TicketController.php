@@ -29,14 +29,13 @@ class TicketController extends Controller
 
     public function index(Request $request)
 	{
-        
-        $tickets = Ticket::paginate(10);
-        $types = $this->types->getAllActive();
+
+        $tickets = $this->tickets->getAllFiltered($request);
+        $types = $this->types->getAll();
 
         return view('tickets.index', [
           'tickets' => $tickets,
           'types' => $types,
-
         ]);
 	}
 

@@ -16,9 +16,17 @@
         <p>
             <form action="{{ url('/tickets') }}" method="get">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="unique_code" value="" id="keyword" placeholder="Enter ticket code here to search ....">
-                    <label for="ordered" class="control-label">Ordered</label><input id="ordered" type="checkbox" name="type[]" value=""/>
-
+                    <input type="text" class="form-control" name="unique_code" value="" id="keyword" placeholder="Enter ticket code here to search ...."/>
+                    @foreach ($types as $type)
+                      <label for="ordered" class="control-label">{{$type->name}}</label><input id="ordered" type="checkbox" name="type[]" value="{{$type->id}}"/>
+                    @endforeach
+                    <select class="form-control" name="filter">
+                      <option value="all">All</option>
+                      <option value="not_ordered">Not Ordered</option>
+                      <option value="ordered">Ordered</option>
+                      <option value="actived">Actived</option>
+                      <option value="checked_in">Checked In</option>
+                    </select>
                     <span class="input-group-btn">
                         <button class="btn btn-info btn-flat" type="submit"><i class="fa fa-search"></i></button>
                     </span>
