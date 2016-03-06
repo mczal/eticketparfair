@@ -6,7 +6,7 @@ background: url('../images/background.jpg')no-repeat center center fixed;
   -o-background-size: cover;
   background-size: cover;
 
-  font-family: 'Neoteric', sans-serif; font-weight: 800;
+  font-family: 'Neoteric';
   color:white;
 
  }
@@ -50,6 +50,10 @@ font-family:Avenir;}
 
 #third{font-family:Neoteric;font-size:18px;}
 
+#second{
+box-shadow: 1px 1px 25px #ffffff;
+}
+
 h5{
 font-family:Avenir;}
 
@@ -85,7 +89,7 @@ responsiveabsolutecenter {
 }
 
  #frontpage {
- background: url('../images/background home.jpg')no-repeat center center fixed;
+ background: url('../images/background_home.jpg')no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
