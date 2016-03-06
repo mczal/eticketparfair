@@ -189,9 +189,7 @@ class ConfirmationController extends Controller
          $m->subject('your ticket');
 
          foreach($confirmation->order->tickets as $ticket){
-             $pdf = PDF::loadView('tickets.print', [
-                 'ticket' => $ticket,
-             ])->setPaper('a5', 'landscape');
+             $pdf = $ticket->generatePDF(true);
              $m->attachData($pdf->output(), $ticket->unique_code.'.pdf');
          }
      });

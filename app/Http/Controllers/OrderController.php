@@ -130,6 +130,10 @@ class OrderController extends Controller
             $m->from('wilianto.indra@gmail.com', 'Parahyangan Fair');
             $m->to($order->email, $order->name);
             $m->subject('Thank you for order');
+            foreach($order->tickets as $ticket){
+                $pdf = $ticket->generatePDF(true);
+                $m->attachData($pdf->output(), $ticket->unique_code.'.pdf');
+            }
         });
 
         return redirect('/orders')->with('success_message', 'Order #<b>' . $order->no_order . '</b> was created.');

@@ -44,6 +44,7 @@
                             <td>
                                 <a href="{{ url('/types/'.$type->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
                                 <a href="{{ url('/types/'.$type->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                <a href="{{ url('/types/print/'.$type->id) }}" class="btn btn-default"><i class="fa fa-print"></i></a>
                                 <form action="{{ url('/types/'.$type->id.'') }}" method="post" style="display:inline">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}

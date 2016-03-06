@@ -16,6 +16,11 @@ Route::get('admin', function(){
     return redirect('/orders');
 });
 
+Route::group(['prefix' => 'api'], function(){
+    Route::post('login', 'Api\AuthenticateController@authenticate');
+    Route::get('check-in/{unique_code}', 'Api\TicketController@checkIn');
+});
+
 //USER web
 
 
@@ -51,6 +56,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('tickets', 'TicketController');
     Route::get('tickets/print/{unique_code}', 'TicketController@printTicket');
 
+    Route::get('types/print/{id}', 'TypeController@printTicket');
     Route::resource('types', 'TypeController');
 
     Route::resource('confirmations', 'ConfirmationController');

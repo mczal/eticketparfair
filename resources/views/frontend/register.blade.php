@@ -48,8 +48,13 @@
 			</div>
 			<div class="form-group{{ $errors->has('handphone') ? ' has-error' : '' }}">
 				<div class="col-sm-12">
-					<label for="handphone">Handphone:</label>
-					<input class="form-control" id="handphone" style="margin-bottom: 20px;" name="handphone">
+					<label for="handphone">Handphone:
+					@if ($errors->has('handphone'))
+			            <span class="help-block">
+			                <strong>{{ $errors->first('handphone') }}</strong>
+			            </span>
+			        @endif</label>
+					<input class="form-control" id="handphone" style="margin-bottom: 20px;" name="handphone" value="{{ old('handphone') }}">
 				</div>
 			</div>
 			<div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">

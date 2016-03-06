@@ -29,7 +29,7 @@ class TicketController extends Controller
 
     public function index(Request $request)
 	{
-        
+
         $tickets = Ticket::paginate(10);
         $types = $this->types->getAllActive();
 
@@ -178,12 +178,13 @@ class TicketController extends Controller
      */
     public function printTicket(Request $request){
         $ticket = Ticket::find($request->unique_code);
+        
+        return $ticket->generatePDF()->stream();
 
-        $pdf = PDF::loadView('tickets.print', [
-            'ticket' => $ticket,
-        ])->setPaper([0, 0, 595.28, 243], 'portrait');
-        // return $pdf->download("{$ticket->unique_code}.pdf");
-        return $pdf->stream();
+        // $tickets = Ticket::paginate(10);
+        // foreach($tickets as $ticket){
+        //     echo $ticket->generatePDF()->stream();
+        // }
 
         // Mail::send('emails.order', ['order' => $ticket->order], function($m) use ($pdf, $ticket){
         //     $m->from('wilianto.indra@gmail.com', 'Ticket Parahyangan Fair');

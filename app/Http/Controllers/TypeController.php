@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use PDF;
 use App\Type;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -110,5 +111,15 @@ class TypeController extends Controller
         $type->delete();
 
         return redirect('/types')->with('success_message', 'Type <b>' . $type->name . '</b> was deleted.');
+    }
+
+    public function printTicket($id){
+        $type = $this->types->findById($id);
+        is_dir('download/' . $type->id) ? '' : mkdir('download/' . $type->id, 0777, false);
+        $tickets = $type->tickets;
+        foreach($tickets as $ticket){
+            $ticket->generatePDF(true)->save('download/' . $type->id . '/' . $ticket->unique_code . '.pdf');
+        }
+        return "PDF saved.";
     }
 }
