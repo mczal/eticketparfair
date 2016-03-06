@@ -37,4 +37,13 @@ class TypeRepositories{
         $type = Type::where(['id' => $id])->first();
         return $type;
     }
+
+    /**
+    * get all type
+    * @return Type[]
+    */
+    public function getAll(){
+      return Type::all();
+    }
+
 }

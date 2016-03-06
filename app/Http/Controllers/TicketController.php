@@ -29,14 +29,12 @@ class TicketController extends Controller
 
     public function index(Request $request)
 	{
-
-        $tickets = Ticket::paginate(10);
-        $types = $this->types->getAllActive();
+        $tickets = $this->tickets->getAllFiltered($request);
+        $types = $this->types->getAll();
 
         return view('tickets.index', [
           'tickets' => $tickets,
           'types' => $types,
-
         ]);
 	}
 
@@ -178,7 +176,7 @@ class TicketController extends Controller
      */
     public function printTicket(Request $request){
         $ticket = Ticket::find($request->unique_code);
-        
+
         return $ticket->generatePDF()->stream();
 
         // $tickets = Ticket::paginate(10);

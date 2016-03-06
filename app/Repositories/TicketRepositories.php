@@ -29,6 +29,118 @@
                     ->count();
     }
 
+    public function getAllFiltered($request){
+      if($request->unique_code == null || $request->unique_code == ''){
+        if($request->type == null || $request->type == ''){
+          if($request->filter == 'all'){
+            return Ticket::paginate(20);
+          }else if($request->filter == 'not_ordered'){
+            return Ticket::where('order_date' , null)->paginate(20);
+          }else if($request->filter == 'ordered'){
+            return Ticket::whereNotNull('order_date')
+                          ->whereNotIn('order_date',[''])
+                          ->paginate(20);
+          }else if($request->filter == 'actived'){
+            return Ticket::whereNotNull('active_date')
+                          ->whereNotIn('active_date' , [''])
+                          ->paginate(20);
+          }else if($request->filter == 'checked_in'){
+            return Ticket::whereNotNull('check_in_date')
+                          ->whereNotIn('check_in_date' , [''])
+                          ->paginate(20);
+          }else{
+            //DONE
+            return Ticket::paginate(20);
+          }
+        }else{
+          //dd($request->type);
+          if($request->filter == 'all'){
+            return Ticket::whereIn('type_id',$request->type)
+                          ->paginate(20);
+          }else if($request->filter == 'not_ordered'){
+            return Ticket::where('order_date' , null)
+                          ->whereIn('type_id',$request->type)
+                          ->paginate(20);
+          }else if($request->filter == 'ordered'){
+            return Ticket::whereNotNull('order_date')
+                          ->whereNotIn('order_date',[''])
+                          ->whereIn('type_id',$request->type)
+                          ->paginate(20);
+          }else if($request->filter == 'actived'){
+            return Ticket::whereNotNull('active_date')
+                          ->whereNotIn('active_date' , [''])
+                          ->whereIn('type_id',$request->type)
+                          ->paginate(20);
+          }else if($request->filter == 'checked_in'){
+            return Ticket::whereNotNull('check_in_date')
+                          ->whereNotIn('check_in_date' , [''])
+                          ->whereIn('type_id',$request->type)
+                          ->paginate(20);
+          }else{
+            return Ticket::whereIn('type_id',$request->type)
+                          ->paginate(20);
+          }
+        }
+      }else{
+        if($request->type == null || $request->type == ''){
+          if($request->filter == 'all'){
+            //dd(2);
+            return Ticket::where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }else if($request->filter == 'not_ordered'){
+            return Ticket::where('order_date' , null)
+                          ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }else if($request->filter == 'ordered'){
+            return Ticket::where('order_date', '!=' , null)
+                          ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }else if($request->filter == 'actived'){
+            return Ticket::where('active_date', '!=' , null)
+                          ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }else if($request->filter == 'checked_in'){
+            return Ticket::where('check_in_date', '!=' , null)
+                          ->where('unique_code', 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }else{
+            return Ticket::where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }
+        }else{
+          if($request->filter == 'all'){
+            return Ticket::whereIn('type_id',$request->type)
+                          ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }else if($request->filter == 'not_ordered'){
+            return Ticket::where('order_date' , null)
+                          ->whereIn('type_id',$request->type)
+                          ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }else if($request->filter == 'ordered'){
+            return Ticket::where('order_date', '!=' , null)
+                          ->whereIn('type_id',$request->type)
+                          ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }else if($request->filter == 'actived'){
+            return Ticket::where('active_date', '!=' , null)
+                          ->whereIn('type_id',$request->type)
+                          ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }else if($request->filter == 'checked_in'){
+            return Ticket::where('check_in_date', '!=' , null)
+                          ->whereIn('type_id',$request->type)
+                          ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }else{
+            return Ticket::whereIn('type_id',$request->type)
+                          ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
+                          ->paginate(20);
+          }
+        }
+      }
+    }
+
   }
 
  ?>
