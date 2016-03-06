@@ -31,8 +31,6 @@ Route::get('admin', function(){
 */
 
 //testing
-Route::post('orders/store-offline','OrderController@storeOffline');
-Route::get('orders/create-offline','OrderController@createOffline');
 
 Route::group(['middleware' => ['web']], function () {
     // Route::get('/login', 'Auth\AuthController@showLoginForm');
@@ -41,10 +39,20 @@ Route::group(['middleware' => ['web']], function () {
     Route::auth();
     //require auth
     Route::get('orders/cancel', 'OrderController@cancel');
+    Route::post('orders/store-offline','OrderController@storeOffline');
+    Route::get('orders/create-offline','OrderController@createOffline');
     Route::resource('orders', 'OrderController');
+
+    /*TEST*/
+    Route::get('tickets/create-check-in',function(){
+      return view('tickets.create-check-in');
+    });
+    /*TEST*/
     Route::resource('tickets', 'TicketController');
     Route::get('tickets/print/{unique_code}', 'TicketController@printTicket');
+
     Route::resource('types', 'TypeController');
+
     Route::resource('confirmations', 'ConfirmationController');
     Route::post('confirmations/validate','ConfirmationController@validateOrder');
 
@@ -54,7 +62,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('confirmation', 'FrontendController@confirmationStore');
 
     //API Android
-    Route::get('tickets/get-data/{code}','TicketController@getTicketData');
-    Route::post('tickets/check-in','TicketController@checkIn');
+    Route::get('tickets/get-data/{code}','api\TicketController@getTicketData');
+    Route::post('tickets/check-in','api\TicketController@checkIn');
 
 });

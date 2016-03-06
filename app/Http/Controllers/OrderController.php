@@ -184,26 +184,29 @@ class OrderController extends Controller
 
       $ticket = $this->tickets->findByUniqueCode($request->unique_code);
       $ticket->active_date=date('Y-m-d H:i:s', time() + (3600 * 10));
-      //$ticket->save();
+      $ticket->order_date=date('Y-m-d H:i:s', time() + (3600 * 10));
 
-      $type = $this->types->findById($ticket->type);
 
+      //dd($ticket->type->price);
       $order = new Order;
       $order->fill($request->all());
       $order->no_order = $this->orders->generateNoOrder();
       $order->expired_date = date('Y-m-d H:i:s', time() + (3600 * 10)); //10 hours
-      $order->status = 2; //langsung aktif
+      $order->status = Order::STATUS_PAID; //langsung aktif
       $order->quantity = 1;
-      $order->total_price = $type->price;
+      $order->total_price = $ticket->type->price;
 
       $order->save();
-      $tiket->save();
+      $ticket->order()->associate($order);
+      //dd($ticket->order);
+      $ticket->save();
 
       return redirect('/orders/create-offline')->with('success_message', 'Order #<b>' . $order->no_order . '</b> was created and active.');
 
     }
+
     public function createOffline(){
-      dd('ijal');
+      //dd('ijal'); //debug section
       return view('orders.create-offline');
     }
 

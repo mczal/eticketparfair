@@ -4,9 +4,11 @@
 
 @section('content')
 
+<!--
   <p>
       <a class="btn btn-primary" href={{url('/confirmations/create')}} role="button"><i class="fa fa-plus"></i> Create New</a>
   </p>
+-->
   <div class="box box-solid">
   <div class="box-body">
     <p>
@@ -57,7 +59,9 @@
             <td>{{$confirmation->created_at}}</td>
             <td>
               <a href="{{url('/confirmations/'.$confirmation->id)}}" class="btn btn-default"><i class="fa fa-eye"></i></a>
+            <!--
               <a href="{{url('/confirmations/'.$confirmation->id.'/edit')}}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+            -->
               <form style="display:inline" action="{{url('/confirmations/'.$confirmation->id)}}" method="post">
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}

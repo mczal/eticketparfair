@@ -55,6 +55,7 @@ class FrontendController extends Controller
             'email' => 'required|unique:orders|email',
             'id_no' => 'required',
             'quantity' => 'required|integer|min:1|max:3',
+            'handphone' => 'required',
         ]);
 
         //find type

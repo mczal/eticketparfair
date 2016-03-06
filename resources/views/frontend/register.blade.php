@@ -46,6 +46,12 @@
 					<input type="text" class="form-control" name="id_no" id="id_no" style="margin-bottom: 20px;" value="{{ old('id_no') }}">
 				</div>
 			</div>
+			<div class="form-group{{ $errors->has('handphone') ? ' has-error' : '' }}">
+				<div class="col-sm-12">
+					<label for="handphone">Handphone:</label>
+					<input class="form-control" id="handphone" style="margin-bottom: 20px;" name="handphone">
+				</div>
+			</div>
 			<div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
 				<div class="col-sm-12">
 					<label for="quantity">Number of tickets:</label>
@@ -63,11 +69,7 @@
 				</div>
 			</p>
 			<div class="col-sm-12">
-<<<<<<< HEAD
 				<input type="hidden" value="{{env('ACTIVE_TICKET_TYPE')}}" name="type_id">
-=======
-				<input type="hidden" value="{{ env('ACTIVE_TICKET_TYPE') }}" name="type_id">
->>>>>>> 1b05d51c6c9af06ad37e7964e45d29a0c9fd0989
 				<button class="btn btn-lg btn-primary pull-right" type="submit" role="button">Submit</button>
 			</div>
 		</form>

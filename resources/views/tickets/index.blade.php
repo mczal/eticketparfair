@@ -5,12 +5,26 @@
 @section('subheader', 'Ticket List')
 
 @section('content')
+<!--
   <p>
       <a class="btn btn-primary" href={{url('/tickets/create')}} role="button"><i class="fa fa-plus"></i>  Create New</a>
   </p>
+-->
 
   <div class="box box-solid">
       <div class="box-body">
+        <p>
+            <form action="{{ url('/tickets') }}" method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="unique_code" value="" id="keyword" placeholder="Enter ticket code here to search ....">
+                    <label for="ordered" class="control-label">Ordered</label><input id="ordered" type="checkbox" name="type[]" value=""/>
+
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-flat" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+        </p>
           <table class="table table-striped table-hover">
             <thead>
               <tr>
@@ -37,6 +51,7 @@
                     <td>
                       <a href="{{url('/tickets/print/'.$ticket->id)}}" class="btn btn-default btn-primary" target="_blank"><i class="fa fa-print"></i></a>
                       <a href="{{url('/tickets/'.$ticket->id)}}" class="btn btn-default"><i class="fa fa-eye"></i></a>
+                      <!--
                       <a href="{{url('/tickets/'.$ticket->id.'/edit')}}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
                       <form action="{{ url('/tickets/'.$ticket->id) }}" method="post" style="display:inline">
                           {!! csrf_field() !!}
@@ -44,6 +59,7 @@
 
                           <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i></button>
                       </form>
+                    -->
                     </td>
                   </tr>
               @endforeach

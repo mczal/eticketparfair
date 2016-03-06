@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Create Order Offline Tickets')
-@section('header', 'Create New Order')
+@section('header', 'Create New Order Offline Tickets')
 @section('subheader', 'Create New')
 
 @section('content')
@@ -13,9 +13,10 @@
             <h3 class="box-title">General</h3>
         </div>
         <div class="box-body text-left">
-            <form class="form-horizontal" action="{{ url('/orders') }}" method="post">
+            <form class="form-horizontal" action="{{ url('/orders/store-offline') }}" method="post">
                 {!! csrf_field() !!}
                 @include('commons.error')
+                @include('commons.success')
 
                 <!-- beginning of my form TODO: -->
                 <!-- TICKET CODE -->

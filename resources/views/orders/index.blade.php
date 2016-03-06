@@ -6,7 +6,7 @@
 
 @section('content')
     <p>
-        <a href="{{ url('/orders/create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Create new</a>
+        <a href="{{ url('/orders/create-offline') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Create new offline ticket</a>
     </p>
     <div class="box box-solid">
         <div class="box-body">
@@ -47,12 +47,14 @@
                                 <td>IDR {{ number_format($order->total_price) }}</td>
                                 <td>
                                     <a href="{{ url('/orders/'.$order->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
+                                  <!--
                                     <form action="{{ url('/orders/'.$order->id.'') }}" method="post" style="display:inline">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
 
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i></button>
                                     </form>
+                                  -->
                                 </td>
                             </tr>
                         @endforeach
