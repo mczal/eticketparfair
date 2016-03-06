@@ -1,52 +1,16 @@
 <style>
 @page { margin: 0px; }
 body {
-    margin: 20px;
+    margin: 0px;
     font-family: helvetica;
+    background: url('{{ asset('img/bg-ticket.png') }}')
 }
 </style>
 
-<table border=0>
-    <tr>
-        <td style="text-align: center; width: 250px;">
-            <img src="{{ asset('/qrcodes/' . $ticket->generateBarcode() . '.png') }}" alt="" width="220"/><br>
-            <b style="letter-spacing: 5px">{{ $ticket->unique_code }}</b>
-        </td>
-        <td style="text-align: left; width: 500px;">
-            <h1 style="text-transform: uppercase; margin: 0px;">Parahyangan Festival</h1>
-            <p>
-                Bandung, 7 Mei 2016
-            </p>
-            <table border=0>
-                <tr>
-                    <td>ID</td><td>:</td><td>{{ $ticket->order ? $ticket->order->id_no : ' - ' }}</td>
-                </tr>
-                <tr>
-                    <td>Name</td><td>:</td><td>{{ $ticket->order ? $ticket->order->name : ' - ' }}</td>
-                </tr>
-                <tr>
-                    <td>Email</td><td>:</td><td>{{ $ticket->order ? $ticket->order->email : ' - ' }}</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td colspan=2>
-            <br>
-            ================================================================================
-        </td>
-    </tr>
-    <tr>
-        <td colspan=2>
-            <p>Lorem ipsum dolor sit amet, per iudico graeco cu, ex minimum petentium consulatu quo. Dicam nonumy ullamcorper ne mea, no per oporteat expetenda voluptatibus. Ea sea sensibus mnesarchum. Debet nihil aliquid in vix. Has eu vitae perfecto accommodare. Quo at malis elitr, ad sit brute albucius, te diam duis epicurei pro. Nonumy nonumes epicurei cu sed.</p>
-        </td>
-    </tr>
-    <tr>
-        <td colspan=2 style="text-align: right; font-size: 13px">
-            <br><br>
-            <p>
-                <small><em>{{ date('Y-m-d H:i:s') }} | {{ strtoupper($ticket->generateBarcode()) }}</em></small>
-            </p>
-        </td>
-    </tr>
-</table>
+<span style="position: absolute; left: 18px; top: 48px;">{{ $ticket->order ? $ticket->order->name : ' - ' }}</span>
+<span style="position: absolute; left: 18px; top: 106px;">{{ $ticket->order ? $ticket->order->id_no : ' - ' }}</span>
+<span style="position: absolute; left: 18px; top: 168px;">{{ $ticket->order ? $ticket->order->email : ' - ' }}</span>
+<b style="position: absolute; left: 275px; top: 284px;">{{ $ticket->unique_code }}</b>
+<b style="position: absolute; left: 150px; top: 284px;">{{ $ticket->unique_code }}</b>
+<img src="{{ asset('/qrcodes/' . $ticket->generateBarcode() . '.png') }}" alt="Barcode here" style="position: absolute; right: 7px; top: 137.5px; width: 175px"/>
+<span style="position: absolute; left: 275px; top: 8px; color: #FFFFFF; text-transform: uppercase">{{ $ticket->type->name }}</span>
