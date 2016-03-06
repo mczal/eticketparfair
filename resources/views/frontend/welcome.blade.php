@@ -13,7 +13,7 @@
                 <p align="center">And let's rebuild
                 the ultimate interactive experience!</p>
                 <hr style="width:80%">
-                <a class="btn btn-primary btn-block" href="{{ url('/buy') }}" role="button">GET YOUR TICKET!</a>
+                <a class="btn btn-primary btn-block" id="second" href="{{ url('/buy') }}" role="button">GET YOUR TICKET!</a>
             </div>
         </div>
     </div>

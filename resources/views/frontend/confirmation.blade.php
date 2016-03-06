@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-sm-12">
                     <br>
-                    <button class="btn btn-small btn-primary btn-block" type="submit" role="button">Submit</button>
+                    <button id ="second" style="font-size:11pt;" class="btn btn-small btn-primary btn-block" type="submit" role="button">Submit</button>
                 </div>
             </form>
         </div>
