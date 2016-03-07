@@ -1,5 +1,5 @@
 @extends('layouts.user')
-
+@section('background',"url('/assets/images/background.jpg')no-repeat center center fixed;")
 @section('content')
 <p style="text-align:center; padding-top:30px"><img src="{{ asset("/assets/images/tickets.png" )}}" width="250" height="auto"></p>
 <div class="row">

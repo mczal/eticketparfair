@@ -1,7 +1,6 @@
 @extends('layouts.user')
-
+@section('background', "url('/assets/images/background_home.jpg')center center fixed;")
 @section('content')
-<div class='frontpage'>
     <div class = "container">
         <div class="row">
             <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12" style="background: rgba(76,76,76,0.9); padding-bottom:20px;">
@@ -18,5 +17,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection
