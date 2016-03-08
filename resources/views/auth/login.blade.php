@@ -53,7 +53,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-sign-in"></i>Login
                                 </button>
-                                <a href="{{ url('/register') }}">Register</a>
+                                <!--<a href="{{ url('/register') }}">Register</a>-->
                             </div>
                         </div>
                     </form>

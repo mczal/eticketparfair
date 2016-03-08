@@ -1,5 +1,8 @@
 @extends('layouts.user')
-
+@section('background',"url('/assets/images/background.jpg')no-repeat center center fixed;-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;")
 @section('content')
 <div class = "container" style="padding-top:100px">
     <p style="text-align:center;"><img src="{{ asset('assets/images/payment.png') }}" width="300" height="auto"></p>

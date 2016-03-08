@@ -1,5 +1,8 @@
 @extends('layouts.user')
-@section('background', "url('/assets/images/background_home.jpg')center center fixed;")
+@section('background', "url('/assets/images/background_home.jpg')center center fixed;-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;")
 @section('content')
     <div class = "container">
         <div class="row">

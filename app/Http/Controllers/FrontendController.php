@@ -13,12 +13,14 @@ use App\Ticket;
 use App\Repositories\OrderRepositories;
 use App\Repositories\TypeRepositories;
 use App\Repositories\TicketRepositories;
+use App\Repositories\ConfirmationRepositories;
 
 class FrontendController extends Controller
 {
     protected $orders;
     protected $types;
     protected $tickets;
+    protected $confirmations;
 
     /**
     * Create a new controller instance.
@@ -26,10 +28,11 @@ class FrontendController extends Controller
     * @param  OrderRepositories  $orders
     * @return void
     */
-    public function __construct(OrderRepositories $orders, TypeRepositories $types, TicketRepositories $tickets){
+    public function __construct(ConfirmationRepositories $confirmations,OrderRepositories $orders, TypeRepositories $types, TicketRepositories $tickets){
         $this->orders = $orders;
         $this->types = $types;
         $this->tickets = $tickets;
+        $this->confirmations = $confirmations;
     }
 
     public function welcome(){
@@ -57,10 +60,8 @@ class FrontendController extends Controller
             'quantity' => 'required|integer|min:1|max:3',
             'handphone' => 'required',
         ]);
-
         //find type
         $type = $this->types->findById($request->type_id);
-
         $remaining_tickets = $this->tickets->countTicketsRemaining($type->id);
 
         if($remaining_tickets < $request->quantity){
@@ -118,8 +119,18 @@ class FrontendController extends Controller
             return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> was expire');
         }elseif($order->status == Order::STATUS_PAID){
             return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> was paid');
-        }
+        }//elseif($order !== null){
+        //   //dd("1");
+        //   if($this->confirmations->forOrder($order)){
+        //       return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> was already received');
+        //   }
+        // }
 
+        //here
+        //dd($order);
+        $order->status = Order::STATUS_CONFIRMED;
+        $order->save();
+        //
         $confirmation = new Confirmation;
         $confirmation->name = $request->name;
         $confirmation->order_id = $order->id;

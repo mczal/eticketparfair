@@ -86,6 +86,7 @@
           <div class="row">
               <div class="form-group">
                   <div class="col-sm-6 col-sm-offset-2">
+                      <!--
                       <a href="{{ url('/tickets/' . $ticket->id . '/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
                       <form action="{{ url('/tickets/' . $ticket->id) }}" method="post" style="display: inline">
                           {!! csrf_field() !!}
@@ -93,6 +94,7 @@
 
                           <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i> Delete</button>
                       </form>
+                    -->
                   </div>
               </div>
           </div>

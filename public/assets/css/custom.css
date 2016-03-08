@@ -88,11 +88,10 @@ responsiveabsolutecenter {
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
- /*.frontpage {
- background: url('../images/background_home.jpg')no-repeat center center fixed;
+ .frontpage {
+ /*background: url('../images/background_home.jpg')no-repeat center center fixed;*/
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  padding-bottom:29%;
-  }*/
+  }

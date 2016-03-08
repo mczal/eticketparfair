@@ -96,12 +96,14 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-sm-6 col-sm-offset-2">
+                          <!--
                             <form action="{{ url('/orders/' . $order->id) }}" method="post" style="display: inline">
                                 {!! csrf_field() !!}
                                 {!! method_field('DELETE') !!}
 
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i> Delete</button>
                             </form>
+                          -->
                         </div>
                     </div>
                 </div>
