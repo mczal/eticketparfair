@@ -58,8 +58,7 @@
         <!-- Nama di Bank -->
         <div class="row">
             <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Nama di Bank</label>
-
+                <label for="name" class="col-sm-2 control-label">Nama Pemilik Bank</label>
                 <div class="col-sm-6">
                     {{ $confirmation->name }}
                 </div>
@@ -101,8 +100,19 @@
 
         <!-- Control -->
         <div class="row">
+          <!--delete-->
             <div class="form-group">
                 <div class="col-sm-6 col-sm-offset-2">
+                  <!-- validate -->
+                  @if ($confirmation->status == 0)
+                    <form style="display:inline" action="{{url('/confirmations/validate')}}" method="post">
+                      {!! csrf_field() !!}
+                      <input readOnly type="hidden" type="number" name="id" value="{{ $confirmation->id }}">
+                      <button type="submit" class="btn btn-success" onclick="return confirm('All tickets registered will be active !')">Validate</button>
+                    </form>
+                  @else
+                  <button class="btn btn-default" disabled>Valid</button>
+                  @endif
                     <a href="{{ url('/confirmations/' . $confirmation->id . '/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
                     <form action="{{ url('/confirmations/' . $confirmation->id) }}" method="post" style="display: inline">
                         {!! csrf_field() !!}

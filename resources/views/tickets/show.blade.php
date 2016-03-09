@@ -37,7 +37,7 @@
                   <label for="ticket-order-id" class="col-sm-2 control-label">Order Id</label>
 
                   <div class="col-sm-3">
-                      {{ $ticket->order->no_order }}
+                    {!! $ticket->order ? ($ticket->order->no_order.'<br>'.$ticket->order->name) : '' !!}
                   </div>
               </div>
           </div>

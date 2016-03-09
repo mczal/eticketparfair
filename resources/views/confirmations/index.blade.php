@@ -31,6 +31,7 @@
         <th>Validate</th>
         <th>Order</th>
         <th>No Rekening</th>
+        <th>Nama Pemilik Bank</th>
         <th>Nama Bank</th>
         <th>Total Transfer</th>
         <th>Created At</th>
@@ -54,6 +55,7 @@
             </td>
             <td><a href="{{ url('/orders/' . $confirmation->order->id) }}" target="_blank">{!! $confirmation->order->no_order . '<br>' . $confirmation->order->name !!}</a></td>
             <td>{{$confirmation->no_rekening}}</td>
+            <td>{{$confirmation->name}}</td>
             <td>{{$confirmation->nama_bank}}</td>
             <td>{{number_format($confirmation->total_transfer)}}</td>
             <td>{{$confirmation->created_at}}</td>

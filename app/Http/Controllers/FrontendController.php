@@ -112,25 +112,20 @@ class FrontendController extends Controller
         ]);
 
         $order = $this->orders->findByNo($request->no_order);
-
+        
         if($order === null){
             return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> not found');
         }elseif($order->status == Order::STATUS_EXPIRE){
             return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> was expire');
         }elseif($order->status == Order::STATUS_PAID){
             return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> was paid');
-        }//elseif($order !== null){
-        //   //dd("1");
-        //   if($this->confirmations->forOrder($order)){
-        //       return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> was already received');
-        //   }
-        // }
+        }elseif(count($this->confirmations->forOrder($order)) > 0){
+           return redirect('/confirmation')->with('error_message', 'Confirmation for order <b id="fourth">#' . $request->no_order . '</b> was already received');
+        }
 
-        //here
-        //dd($order);
         $order->status = Order::STATUS_CONFIRMED;
         $order->save();
-        //
+
         $confirmation = new Confirmation;
         $confirmation->name = $request->name;
         $confirmation->order_id = $order->id;
