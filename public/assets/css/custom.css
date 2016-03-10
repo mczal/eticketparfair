@@ -69,6 +69,11 @@ font-family:Avenir;}
 h3{
 font-family:DevilBreeze;}
 
+ .btn-custom{
+ width:240px;
+ margin:0px auto;
+ }
+
  absolutecenter {
   margin: auto;
   position: absolute;

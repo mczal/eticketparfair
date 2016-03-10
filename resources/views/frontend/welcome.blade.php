@@ -16,8 +16,9 @@ background-size: cover;")
                 <p align="center">And let's rebuild
                 the ultimate interactive experience!</p>
                 <hr style="width:80%">
-                <a style="font-size:9pt;" class="btn btn-primary btn-block" id="second" href="{{ url('/buy') }}" role="button">GET YOUR TICKET!</a>
+                <a style="font-size:9pt;" class="btn btn-primary btn-block btn-custom" id="second" href="{{ url('/buy') }}" role="button">GET YOUR TICKET!</a>
             </div>
         </div>
     </div>
+<h5 align='center' style="color:black;">Contact us: 081288533739 (Akbar) / 085921231626 (Andin)</h5>
 @endsection
