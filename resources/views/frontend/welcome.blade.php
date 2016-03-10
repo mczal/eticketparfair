@@ -20,5 +20,5 @@ background-size: cover;")
             </div>
         </div>
     </div>
-<h5 align='center' style="color:black;">Contact us: 081288533739 (Akbar) / 085921231626 (Andin)</h5>
+<h5 align='center' style="color:black;font-size:9pt;">CONTACT US: 081288533739 (AKBAR) / 085921231626 (ANDIN)</h5>
 @endsection
