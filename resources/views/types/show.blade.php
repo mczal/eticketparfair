@@ -44,6 +44,16 @@
                 </div>
             </div>
 
+            <!-- Count Ticket -->
+            <div class="row">
+                <div class="form-group">
+                    <label for="type-active" class="col-sm-1 control-label">Count TIcket</label>
+                    <div class="col-sm-3">
+                        {{$count}}
+                    </div>
+                </div>
+            </div>
+
             <!-- Control -->
             <div class="row">
                 <div class="form-group">

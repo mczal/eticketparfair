@@ -9,10 +9,12 @@ use App\Type;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\TypeRepositories;
+use App\Repositories\TicketRepositories;
 
 class TypeController extends Controller
 {
     protected $types;
+    protected $tickets;
 
     /**
      * Create a new controller instance.
@@ -20,9 +22,10 @@ class TypeController extends Controller
      * @param  TypeRepositories  $tasks
      * @return void
      */
-     public function __construct(TypeRepositories $types){
+     public function __construct(TypeRepositories $types,TicketRepositories $tickets){
          $this->middleware('auth');
          $this->types = $types;
+         $this->tickets = $tickets;
      }
 
     /**
@@ -70,8 +73,11 @@ class TypeController extends Controller
     */
     public function show($id){
         $type = $this->types->findById($id);
+        $tickets = $this->tickets->forType($type);
+        $countTicket = count($tickets);
         return view('types.show', [
             'type' => $type,
+            'count' => $countTicket,
         ]);
     }
 
@@ -114,6 +120,8 @@ class TypeController extends Controller
     }
 
     public function printTicket($id){
+        set_time_limit(0);
+        ini_set('max_execution_time', 1000);
         $type = $this->types->findById($id);
         is_dir('download/' . $type->id) ? '' : mkdir('download/' . $type->id, 0777, false);
         $tickets = $type->tickets;

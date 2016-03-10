@@ -112,7 +112,7 @@ class FrontendController extends Controller
         ]);
 
         $order = $this->orders->findByNo($request->no_order);
-        
+
         if($order === null){
             return redirect('/confirmation')->with('error_message', 'Order <b id="fourth">#' . $request->no_order . '</b> not found');
         }elseif($order->status == Order::STATUS_EXPIRE){
