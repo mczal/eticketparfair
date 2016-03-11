@@ -13,7 +13,7 @@ please contact <br>
 <br>
 We hope you enjoy Parahyangan Fair Festival 2016! <br>
 <br>
-========================================================================== <br>
+=========================================================== <br>
 <br>
 Terima kasih telah melakukan konfirmasi pembayaran, berikut adalah detail pemesanan anda : <br>
 <br>
