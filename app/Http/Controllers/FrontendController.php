@@ -78,6 +78,11 @@ class FrontendController extends Controller
         $order->total_price = ($type->price * $order->quantity) + rand(1, 999);
         $order->save();
 
+        //--get type price...
+        $atPrice = $order->type->price;
+        //dd($atPrice); //DEBUG
+        //--end of get type price
+
         //TODO: make safer saving technique with transaction
         //set to ticket
         $tickets = Ticket::where('type_id', $type->id)
@@ -91,10 +96,10 @@ class FrontendController extends Controller
             $ticket->save();
         }
 
-        Mail::send('emails.order', ['order' => $order], function($m) use ($order){
-            $m->from('wilianto.indra@gmail.com', 'Parahyangan Fair');
+        Mail::send('emails.order', ['order' => $order , 'atPrice' => $atPrice], function($m) use ($order){
+            $m->from('admin@parahyanganfair.com', 'Parahyangan Fair Festival 2016');
             $m->to($order->email, $order->name);
-            $m->subject('Thank you for order');
+            $m->subject('Order Parahyangan Fair Festival 2016');
         });
 
         return view('frontend.register_success', [

@@ -42,6 +42,13 @@ class Ticket extends Model
         return $pdf;
     }
 
+    public function generatePDFOnline(){      
+      $pdf = PDF::loadView('tickets.print-online', [
+          'ticket' => $this,
+      ])->setPaper([0, 0, 595.28, 243], 'portrait');
+      return $pdf;
+    }
+
     /**
     * Activate ticket paid
     *eloquent mutator magic

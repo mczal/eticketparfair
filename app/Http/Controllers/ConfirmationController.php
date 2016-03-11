@@ -183,13 +183,13 @@ class ConfirmationController extends Controller
      $confirmation->save();
 
      //sent ticket to customer by email
-     Mail::send('emails.order', ['order' => $confirmation->order], function($m) use ($confirmation){
-         $m->from('wilianto.indra@gmail.com', 'Ticket Parahyangan Fair');
+     Mail::send('emails.ticket-send', ['confirmation' => $confirmation], function($m) use ($confirmation){
+         $m->from('admin@parahyanganfair.com', 'Parahyangan Fair Festival 2016');
          $m->to($confirmation->order->email, $confirmation->order->name);
-         $m->subject('your ticket');
+         $m->subject('Ticket Parahyangan Fair Festival 2016');
 
          foreach($confirmation->order->tickets as $ticket){
-             $pdf = $ticket->generatePDF(true);
+             $pdf = $ticket->generatePDFOnline();
              $m->attachData($pdf->output(), $ticket->unique_code.'.pdf');
          }
      });
