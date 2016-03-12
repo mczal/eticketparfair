@@ -16,7 +16,7 @@ Route::get('admin', function(){
     return redirect('/orders');
 });
 
-Route::group(['prefix' => 'api'], function(){
+Route::group(['prefix' => 'Api'], function(){
     Route::post('login', 'Api\AuthenticateController@authenticate');
     Route::get('check-in/{unique_code}', 'Api\TicketController@checkIn');
 });
@@ -68,7 +68,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('confirmation', 'FrontendController@confirmationStore');
 
     //API Android
-    Route::get('tickets/get-data/{code}','api\TicketController@getTicketData');
-    Route::post('tickets/check-in','api\TicketController@checkIn');
+    Route::get('tickets/get-data/{code}','Api\TicketController@getTicketData');
+    Route::post('tickets/check-in','Api\TicketController@checkIn');
 
 });
