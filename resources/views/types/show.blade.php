@@ -65,6 +65,12 @@
 
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i> Delete</button>
                         </form>
+                        <form action="{{ url('/types/remove-eager') }}" method="post" style="display: inline">
+                            {!! csrf_field() !!}
+                            <input type="hidden" name="passkey" value="" />
+                            <input type="hidden" name="id" value="{{$type->id}}"/>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to do this action?')"><i class="fa fa-trash-o"></i> RE </button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -43,6 +43,7 @@ Route::group(['middleware' => ['web']], function () {
     // Route::get('/logout', 'Auth\AuthController@logout');
     Route::auth();
     //require auth
+    Route::post('orders/resend-mail-online-order','OrderController@resendMailOnlineOrder');
     Route::get('orders/cancel', 'OrderController@cancel');
     Route::post('orders/store-offline','OrderController@storeOffline');
     Route::get('orders/create-offline','OrderController@createOffline');
@@ -57,10 +58,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('tickets/print/{unique_code}', 'TicketController@printTicket');
 
     Route::get('types/print/{id}', 'TypeController@printTicket');
+    Route::post('types/remove-eager','TypeController@removeAllAssociatedWithType');
     Route::resource('types', 'TypeController');
 
     Route::resource('confirmations', 'ConfirmationController');
     Route::post('confirmations/validate','ConfirmationController@validateOrder');
+    Route::post('confirmations/resendMail','ConfirmationController@resendMail');
 
     Route::get('buy', 'FrontendController@buy');
     Route::post('buy', 'FrontendController@buyStore');

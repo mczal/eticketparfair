@@ -194,8 +194,23 @@ class ConfirmationController extends Controller
          }
      });
 
-     return redirect('/confirmations')->with('success_message', 'Confirmation id:<b>' . $confirmation->id . '</b> was deleted.');
+     return redirect('/confirmations')->with('success_message', 'Confirmation id:<b>' . $confirmation->id . '</b> was active.');
 
+   }
+
+   public function resendMail(Request $request){
+     $confirmation = Confirmation::where(['id' => $request->id])->first();
+     Mail::send('emails.ticket-send', ['confirmation' => $confirmation], function($m) use ($confirmation){
+         $m->from('admin@parahyanganfair.com', 'Parahyangan Fair Festival 2016');
+         $m->to($confirmation->order->email, $confirmation->order->name);
+         $m->subject('Ticket Parahyangan Fair Festival 2016');
+
+         foreach($confirmation->order->tickets as $ticket){
+             $pdf = $ticket->generatePDFOnline();
+             $m->attachData($pdf->output(), $ticket->unique_code.'.pdf');
+         }
+     });
+     return redirect('/confirmations')->with('success_message', 'Email Confirmation id:<b>' . $confirmation->id . '</b> with all of its ticket registered was sent.');
    }
 
 }

@@ -204,6 +204,8 @@ class OrderController extends Controller
       $ticket->order()->associate($order);
       //dd($ticket->order);
       $ticket->save();
+      $order->type()->associate($ticket->type);
+      $order->save();
 
       return redirect('/orders/create-offline')->with('success_message', 'Order #<b>' . $order->no_order . '</b> was created and active.');
 
@@ -212,6 +214,20 @@ class OrderController extends Controller
     public function createOffline(){
       //dd('ijal'); //debug section
       return view('orders.create-offline');
+    }
+
+    public function resendMailOnlineOrder(Request $request){
+      $order = $this->orders->findById($request->id);
+      //dd($order);
+      $atPrice = $order->type->price;
+      //dd($atPrice);
+      Mail::send('emails.order', ['order' => $order , 'atPrice' => $atPrice], function($m) use ($order){
+          $m->from('admin@parahyanganfair.com', 'Parahyangan Fair Festival 2016');
+          $m->to($order->email, $order->name);
+          $m->subject('Order Parahyangan Fair Festival 2016');
+      });
+
+      return redirect('/orders');
     }
 
 

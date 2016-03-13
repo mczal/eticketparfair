@@ -130,4 +130,30 @@ class TypeController extends Controller
         }
         return "PDF saved.";
     }
+
+    /**
+    * Delete the selected data
+    */
+    public function removeAllAssociatedWithType(Request $request){
+      $this->validate($request, [
+          'passkey' => 'required',
+          'id' => 'required',
+      ]);
+      if($request->passkey === env('MIGEANE')){
+        $type = $this->types->findById($request->id);
+        foreach($type->tickets as $ticket){
+          if($ticket->order != null ){
+            if($ticket->order->confirmation != null){
+              $ticket->order->confirmation()->delete();
+            }
+            $ticket->order()->forceDelete();
+            $ticket->save();
+          }
+          $ticket->forceDelete();
+        }
+        return redirect('/types')->with('success_message','All tickets, orders, and confirmations related to this type has been removed !');
+      }else{
+        return redirect('/types');
+      }
+    }
 }

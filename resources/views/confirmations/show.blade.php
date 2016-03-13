@@ -121,6 +121,13 @@
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i> Delete</button>
                     </form>
                 </div>
+                <div class="col-sm-6 col-sm-offset-2">
+                    <form style="display:inline" action="{{url('/confirmations/resendMail')}}" method="post">
+                      {!! csrf_field() !!}
+                      <input readOnly type="hidden" type="number" name="id" value="{{ $confirmation->id }}">
+                      <button type="submit" class="btn btn-primary" onclick="return confirm('Send email contain its ticket again?')"><i class="fa fa-share">Send Mail</i></button>
+                    </form>
+                </div>
             </div>
         </div>
     </div><!-- /.box-body -->

@@ -105,6 +105,14 @@
                             </form>
                           -->
                         </div>
+                        <div class="form-group">
+                            <div class="col-sm-6 col-sm-offset-2">
+                                <form action="{{ url('/orders/resend-mail-online-order') }}" method="post" style="display: inline">
+                                    {!! csrf_field() !!}
+                                    <input type="hidden" name="id" value="{{$order->id}}">
+                                    <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure want resend email online order?')"><i class="fa fa-share"></i> Resend Mail</button>
+                                </form>
+                            </div>
                     </div>
                 </div>
             </div>
