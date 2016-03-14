@@ -146,7 +146,9 @@ class TypeController extends Controller
             if($ticket->order->confirmation != null){
               $ticket->order->confirmation()->forceDelete();
             }
+            $ticket->order()->dissociate();
             $ticket->order()->forceDelete();
+            $ticket->order_date = null;
             $ticket->order_date = null;
             $ticket->save();
           }
@@ -171,6 +173,7 @@ class TypeController extends Controller
             if($ticket->order->confirmation != null){
               $ticket->order->confirmation()->forceDelete();
             }
+            $ticket->order()->dissociate();
             $ticket->order()->forceDelete();
           }
           $ticket->order_date = null;
