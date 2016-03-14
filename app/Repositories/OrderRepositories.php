@@ -69,4 +69,12 @@ class OrderRepositories{
                     ->get();
       return $orders;
     }
+
+    public function getAllNoOrderNull(){
+      $orders = Order::where('no_order',null)
+                      ->orWhere('no_order','')
+                      ->get();
+      //dd($orders);
+      return $orders;
+    }
 }

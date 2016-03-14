@@ -10,11 +10,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\TypeRepositories;
 use App\Repositories\TicketRepositories;
+use App\Repositories\OrderRepositories;
 
 class TypeController extends Controller
 {
     protected $types;
     protected $tickets;
+    protected $orders;
 
     /**
      * Create a new controller instance.
@@ -22,10 +24,11 @@ class TypeController extends Controller
      * @param  TypeRepositories  $tasks
      * @return void
      */
-     public function __construct(TypeRepositories $types,TicketRepositories $tickets){
+     public function __construct(OrderRepositories $orders,TypeRepositories $types,TicketRepositories $tickets){
          $this->middleware('auth');
          $this->types = $types;
          $this->tickets = $tickets;
+         $this->orders = $orders;
      }
 
     /**
@@ -142,18 +145,25 @@ class TypeController extends Controller
       if($request->passkey === env('MIGEANE')){
         $type = $this->types->findById($request->id);
         foreach($type->tickets as $ticket){
-          if($ticket->order != null ){
+          if($ticket->order != null || $ticket->order > 0 ){
             if($ticket->order->confirmation != null){
-              $ticket->order->confirmation()->forceDelete();
+              $ticket->order->confirmation->forceDelete();
             }
+            $ticket->order->no_order=null;
+            $ticket->order->save();
             $ticket->order()->dissociate();
-            $ticket->order()->forceDelete();
-            $ticket->order_date = null;
-            $ticket->order_date = null;
-            $ticket->save();
           }
+          $ticket->order_date = null;
+          $ticket->active_date = null;
+          $ticket->save();
           $ticket->forceDelete();
         }
+
+        $orders = $this->orders->getAllNoOrderNull();
+        foreach($orders as $order){
+          $order->forceDelete();
+        }
+
         return redirect('/types')->with('success_message','All tickets, orders, and confirmations related to this type has been removed !');
       }else{
         return redirect('/types');
@@ -169,17 +179,23 @@ class TypeController extends Controller
       if($request->passkey === env('MIGEANE')){
         $type = $this->types->findById($request->id);
         foreach($type->tickets as $ticket){
-          if($ticket->order != null ){
+          if($ticket->order != null || $ticket->order > 0 ){
             if($ticket->order->confirmation != null){
-              $ticket->order->confirmation()->forceDelete();
+              $ticket->order->confirmation->forceDelete();
             }
+            $ticket->order->no_order=null;
+            $ticket->order->save();
             $ticket->order()->dissociate();
-            $ticket->order()->forceDelete();
           }
           $ticket->order_date = null;
           $ticket->active_date = null;
           $ticket->save();
         }
+        $orders = $this->orders->getAllNoOrderNull();
+        foreach($orders as $order){
+          $order->forceDelete();
+        }
+
         return redirect('/types')->with('success_message','All tickets, orders, and confirmations related to this type has been removed !');
       }else{
         return redirect('/types');
