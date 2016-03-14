@@ -19,6 +19,7 @@ Route::get('admin', function(){
 Route::group(['prefix' => 'Api'], function(){
     Route::post('login', 'Api\AuthenticateController@authenticate');
     Route::get('check-in/{unique_code}', 'Api\TicketController@checkIn');
+    Route::get('orders-cancel', 'Api\OrderController@cancel');
 });
 
 //USER web
@@ -59,6 +60,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('types/print/{id}', 'TypeController@printTicket');
     Route::post('types/remove-eager','TypeController@removeAllAssociatedWithType');
+    Route::post('types/remove-lazy','TypeController@removeAllRelationsAssociatedWithType');
     Route::resource('types', 'TypeController');
 
     Route::resource('confirmations', 'ConfirmationController');

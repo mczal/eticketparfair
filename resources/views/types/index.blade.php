@@ -24,6 +24,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Name</th>
                         <th>Price</th>
                         <th>Active</th>
@@ -38,6 +39,7 @@
                     @endif
                     @foreach($types as $type)
                         <tr>
+                            <td>{{ $type->id }}</td>
                             <td>{{ $type->name }}</td>
                             <td>{{ number_format($type->price) }}</td>
                             <td>{{ $type->active == 1 ? 'Active' : 'Not Active' }}</td>

@@ -12,6 +12,18 @@
             <h3 class="box-title">General</h3>
         </div>
         <div class="box-body text-left">
+
+          <!-- Type Id -->
+            <div class="row">
+                <div class="form-group">
+                    <label for="type-id" class="col-sm-1 control-label">Id</label>
+
+                    <div class="col-sm-6">
+                        {{ $type->id }}
+                    </div>
+                </div>
+            </div>
+
             <!-- Type Name -->
             <div class="row">
                 <div class="form-group">
@@ -69,7 +81,13 @@
                             {!! csrf_field() !!}
                             <input type="hidden" name="passkey" value="" />
                             <input type="hidden" name="id" value="{{$type->id}}"/>
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to do this action?')"><i class="fa fa-trash-o"></i> RE </button>
+                            <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure want to do this action?')"><i class="fa fa-trash-o"></i> RE </button>
+                        </form>
+                        <form action="{{ url('/types/remove-lazy') }}" method="post" style="display: inline">
+                            {!! csrf_field() !!}
+                            <input type="hidden" name="passkey" value="" />
+                            <input type="hidden" name="id" value="{{$type->id}}"/>
+                            <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure want to do this action?')"><i class="fa fa-trash-o"></i> RL </button>
                         </form>
                     </div>
                 </div>

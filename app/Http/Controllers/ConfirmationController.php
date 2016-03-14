@@ -158,6 +158,21 @@ class ConfirmationController extends Controller
 	public function destroy($id)
 	{
         $confirmation = Confirmation::where(['id' => $id])->first();
+        $order = $confirmation->order;
+        //
+        $order->email = $order->email."exp".rand(1, 999);
+        dd($order->email); //debug
+        //
+        $confirmation->order()->dissociate();
+        foreach($order->tickets as $ticket){
+          $ticket->order()->dissociate();
+          $ticket->order_date = null;
+          $ticket->save();
+        }
+        //here
+        $order->email = $order->email."exp";
+        $order->save();
+        $order->delete();
         $confirmation->delete();
 
         return redirect('/confirmations')->with('success_message', 'Confirmation id:<b>' . $confirmation->id . '</b> was deleted.');
@@ -184,9 +199,9 @@ class ConfirmationController extends Controller
 
      //sent ticket to customer by email
      Mail::send('emails.ticket-send', ['confirmation' => $confirmation], function($m) use ($confirmation){
-         $m->from('admin@parahyanganfair.com', 'Parahyangan Fair Festival 2016');
+         $m->from('admin@parahyanganfair.com', 'Parahyangan Fair 2016');
          $m->to($confirmation->order->email, $confirmation->order->name);
-         $m->subject('Ticket Parahyangan Fair Festival 2016');
+         $m->subject('Ticket Parahyangan Fair 2016');
 
          foreach($confirmation->order->tickets as $ticket){
              $pdf = $ticket->generatePDFOnline();
@@ -201,9 +216,9 @@ class ConfirmationController extends Controller
    public function resendMail(Request $request){
      $confirmation = Confirmation::where(['id' => $request->id])->first();
      Mail::send('emails.ticket-send', ['confirmation' => $confirmation], function($m) use ($confirmation){
-         $m->from('admin@parahyanganfair.com', 'Parahyangan Fair Festival 2016');
+         $m->from('admin@parahyanganfair.com', 'Parahyangan Fair 2016');
          $m->to($confirmation->order->email, $confirmation->order->name);
-         $m->subject('Ticket Parahyangan Fair Festival 2016');
+         $m->subject('Ticket Parahyangan Fair 2016');
 
          foreach($confirmation->order->tickets as $ticket){
              $pdf = $ticket->generatePDFOnline();

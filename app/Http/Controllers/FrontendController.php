@@ -97,9 +97,9 @@ class FrontendController extends Controller
         }
 
         Mail::send('emails.order', ['order' => $order , 'atPrice' => $atPrice], function($m) use ($order){
-            $m->from('admin@parahyanganfair.com', 'Parahyangan Fair Festival 2016');
+            $m->from('admin@parahyanganfair.com', 'Parahyangan Fair 2016');
             $m->to($order->email, $order->name);
-            $m->subject('Order Parahyangan Fair Festival 2016');
+            $m->subject('Order Parahyangan Fair 2016');
         });
 
         return view('frontend.register_success', [

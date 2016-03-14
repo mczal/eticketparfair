@@ -62,8 +62,15 @@ class OrderController extends Controller
     */
     public function show($id){
         $order = $this->getModel($id);
+        $timeLeft = "";
+        if($order->expired_date != null){
+          $timeLeft = round((strtotime($order->expired_date) - strtotime(date('Y-m-d H:i:s')))/60);
+          //dd($timeLeft);
+        }
+        //dd($timeLeft);
         return view('orders.show', [
             'order' => $order,
+            'timeLeft' => $timeLeft,
         ]);
     }
 
@@ -127,7 +134,7 @@ class OrderController extends Controller
         }
 
         Mail::send('emails.order', ['order' => $order], function($m) use ($order){
-            $m->from('wilianto.indra@gmail.com', 'Parahyangan Fair');
+            $m->from('wilianto.indra@gmail.com', 'Parahyangan Fair 2016');
             $m->to($order->email, $order->name);
             $m->subject('Thank you for order');
             foreach($order->tickets as $ticket){
@@ -142,22 +149,22 @@ class OrderController extends Controller
     /**
     * Cancel every order which expire and detach their tickets
     */
-    public function cancel(){
-        //TODO: find more effisien query technique
-        $orders = $this->orders->getAllExpire();
-        foreach($orders as $order){
-            $order->status = Order::STATUS_EXPIRE;
-            foreach($order->tickets as $ticket){
-                $ticket->order_date = NULL;
-                $ticket->order()->dissociate();
-                $ticket->save();
-            }
-            $order->save();
-            echo "ID #{$order->no_order} is expire. <br>";
-
-            //TODO: send email to customer, is it need?
-        }
-    }
+    // public function cancel(){
+    //     //TODO: find more effisien query technique
+    //     $orders = $this->orders->getAllExpire();
+    //     foreach($orders as $order){
+    //         $order->status = Order::STATUS_EXPIRE;
+    //         foreach($order->tickets as $ticket){
+    //             $ticket->order_date = NULL;
+    //             $ticket->order()->dissociate();
+    //             $ticket->save();
+    //         }
+    //         $order->save();
+    //         echo "ID #{$order->no_order} is expire. <br>";
+    //
+    //         //TODO: send email to customer, is it need?
+    //     }
+    // }
 
     /**
     * Get order model by Id
@@ -222,9 +229,9 @@ class OrderController extends Controller
       $atPrice = $order->type->price;
       //dd($atPrice);
       Mail::send('emails.order', ['order' => $order , 'atPrice' => $atPrice], function($m) use ($order){
-          $m->from('admin@parahyanganfair.com', 'Parahyangan Fair Festival 2016');
+          $m->from('admin@parahyanganfair.com', 'Parahyangan Fair 2016');
           $m->to($order->email, $order->name);
-          $m->subject('Order Parahyangan Fair Festival 2016');
+          $m->subject('Order Parahyangan Fair 2016');
       });
 
       return redirect('/orders');

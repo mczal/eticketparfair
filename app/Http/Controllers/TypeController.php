@@ -144,12 +144,38 @@ class TypeController extends Controller
         foreach($type->tickets as $ticket){
           if($ticket->order != null ){
             if($ticket->order->confirmation != null){
-              $ticket->order->confirmation()->delete();
+              $ticket->order->confirmation()->forceDelete();
             }
             $ticket->order()->forceDelete();
+            $ticket->order_date = null;
             $ticket->save();
           }
           $ticket->forceDelete();
+        }
+        return redirect('/types')->with('success_message','All tickets, orders, and confirmations related to this type has been removed !');
+      }else{
+        return redirect('/types');
+      }
+    }
+
+    public function removeAllRelationsAssociatedWithType(Request $request){
+      //dd("in");
+      $this->validate($request, [
+          'passkey' => 'required',
+          'id' => 'required',
+      ]);
+      if($request->passkey === env('MIGEANE')){
+        $type = $this->types->findById($request->id);
+        foreach($type->tickets as $ticket){
+          if($ticket->order != null ){
+            if($ticket->order->confirmation != null){
+              $ticket->order->confirmation()->forceDelete();
+            }
+            $ticket->order()->forceDelete();
+          }
+          $ticket->order_date = null;
+          $ticket->active_date = null;
+          $ticket->save();
         }
         return redirect('/types')->with('success_message','All tickets, orders, and confirmations related to this type has been removed !');
       }else{

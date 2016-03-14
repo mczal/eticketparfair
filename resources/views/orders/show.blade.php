@@ -6,7 +6,7 @@
 
 @section('content')
     <p>
-        <a href="{{ url('/orders/create' ) }}" class="btn btn-primary"><i class="fa fa-plus"></i> Create New</a>
+        <a href="{{ url('/orders/create-offline') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Create new offline ticket</a>
         <a href="{{ url('/orders' ) }}" class="btn btn-success"><i class="fa fa-bars"></i> View List</a>
     </p>
     <div class="box box-solid">
@@ -92,6 +92,33 @@
                     </div>
                 </div>
 
+                <!-- Created At -->
+                <div class="row">
+                    <div class="form-group">
+                        <label for="order-created" class="col-sm-2 control-label">Created At</label>
+
+                        <div class="col-sm-6">
+                            {{ $order->created_at }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expired Date -->
+                <div class="row">
+                    <div class="form-group">
+                        <label for="expired-date" class="col-sm-2 control-label">Expired Date</label>
+
+                        <div class="col-sm-2">
+                            {{$order->expired_date}}
+                        </div>
+                        @if($order->status == App\Order::STATUS_ORDERED)
+                        <div class="col-sm-4">
+                            {{$timeLeft}} Minutes Left to Canceled
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
                 <!-- Control -->
                 <div class="row">
                     <div class="form-group">
@@ -105,7 +132,6 @@
                             </form>
                           -->
                         </div>
-                        <div class="form-group">
                             <div class="col-sm-6 col-sm-offset-2">
                                 <form action="{{ url('/orders/resend-mail-online-order') }}" method="post" style="display: inline">
                                     {!! csrf_field() !!}
