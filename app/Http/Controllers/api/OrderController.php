@@ -47,8 +47,10 @@ class OrderController extends Controller
                 $ticket->order()->dissociate();
                 $ticket->save();
             }
-            $order->save();
             echo "ID #{$order->no_order} is expire. <br>";
+            $order->no_order = null;
+            $order->save();
+
 
             //TODO: send email to customer, is it need?
         }

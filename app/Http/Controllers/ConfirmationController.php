@@ -161,7 +161,7 @@ class ConfirmationController extends Controller
         $order = $confirmation->order;
         //
         $order->email = $order->email."exp".rand(1, 999);
-        dd($order->email); //debug
+        //dd($order->email); //debug
         //
         $confirmation->order()->dissociate();
         foreach($order->tickets as $ticket){
@@ -170,7 +170,8 @@ class ConfirmationController extends Controller
           $ticket->save();
         }
         //here
-        $order->email = $order->email."exp";
+        $order->status = Order::STATUS_EXPIRE;
+        $order->no_order = null;
         $order->save();
         $order->delete();
         $confirmation->delete();
