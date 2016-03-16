@@ -72,8 +72,8 @@ background-size: cover;")
 			</div>
 			<p align="center">
 				<div class="col-sm-12">
-					<label for="tiket sisa" >Number of tickets remaining: </label>
-					<label id="first" for="sisa">{{ $remaining_tickets }}</label>
+					<label for="tiket sisa" >Number of tickets remaining:  </label>
+					<label id="first" for="sisa">{{ $remaining_tickets }} (@Rp.{{number_format($price)}})</label>
 				</div>
 			</p>
 			<div class="col-sm-12">

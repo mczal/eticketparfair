@@ -38,11 +38,13 @@ class OrderController extends Controller
     * @param Request
     */
     public function index(Request $request){
-        $keyword = $request->keyword;
-        $orders = $this->orders->getAllFiltered($keyword);
+        $no_order = $request->no_order;
+        $name = $request->name;
+        $orders = $this->orders->getAllFiltered($request);
 
         return view('orders.index', [
-            'keyword' => $keyword,
+            'no_order' => $no_order,
+            'name' => $name,
             'orders' => $orders,
         ]);
     }
@@ -74,8 +76,24 @@ class OrderController extends Controller
         ]);
     }
 
-    public function edit(){
+    public function edit($id){
         //saat ini belum dibutuhkan
+        $order = $this->orders->findById($id);
+        return view('orders.edit',[
+          'order' => $order,
+        ]);
+    }
+
+    public function update(Request $request,$id){
+      $order = $this->orders->findById($id);
+      $this->validate($request, [
+        'name' => 'required',
+        'id_no' => 'required',
+        'email' => 'required',
+      ]);
+      $order->fill($request->all());
+      $order->save();
+      return redirect('/orders')->with('success_message', 'Order no_order : <b>' . $order->no_order . '</b> was saved.');
     }
 
     /**

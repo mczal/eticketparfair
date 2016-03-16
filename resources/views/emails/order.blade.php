@@ -18,8 +18,8 @@ Total : Rp.{{number_format($order->total_price)}} ({{$order->quantity}} x Rp.{{n
 Payment Method: <br>
 Bank Tranfer <br>
 BCA <br>
-Account Name : 192812981982 <br>
-Account Holder : Steffi Averina <br>
+Account Name : 2861556508 <br>
+Account Holder : Akbar Ibrahim Maulana <br>
  <br>
 After the payment had been made, please follow the link below to confirm your payment:<br>
 <a href="http://www.parahyanganfair.com/confirmation">confirmation payment page</a><br>
@@ -55,8 +55,8 @@ Total : Rp.{{number_format($order->total_price)}} ({{$order->quantity}} x Rp.{{n
 Cara Pembayaran : <br>
 Silahkan transfer ke rekening kami dibawah ini : <br>
 BCA <br>
-Account Name : 192812981982 <br>
-Account Holder : Steffi Averina <br>
+Account Name : 2861556508 <br>
+Account Holder : Akbar Ibrahim Maulana <br>
  <br>
 Setelah melakukan pembayaran klik URL beriut untuk konfirmasi :<br>
 <a href="http://www.parahyanganfair.com/confirmation">confirmation payment page</a><br>

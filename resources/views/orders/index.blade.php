@@ -14,7 +14,8 @@
             <p>
                 <form action="{{ url('/orders') }}" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="keyword" value="{{ $keyword }}" id="keyword" placeholder="Enter no order to search ....">
+                        <input type="text" class="form-control" name="no_order" value="{{ $no_order }}" id="no_order" placeholder="Enter no order to search ....">
+                        <input type="text" class="form-control" name="name" value="{{ $name }}" id="name" placeholder="Enter Name to search ....">
                         <span class="input-group-btn">
                             <button class="btn btn-info btn-flat" type="submit"><i class="fa fa-search"></i></button>
                         </span>
@@ -55,6 +56,9 @@
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i></button>
                                     </form>
                                   -->
+                                  <!--
+                                  <a href="{{ url('/orders/'.$order->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                  -->
                                 </td>
                             </tr>
                         @endforeach
@@ -63,5 +67,5 @@
             </table>
         </div>
     </div>
-    {!! $orders->appends(['keyword' => $keyword])->links() !!}
+    {!! $orders->links() !!}
 @endsection

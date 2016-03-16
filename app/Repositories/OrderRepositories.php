@@ -38,11 +38,30 @@ class OrderRepositories{
     * Get all data by selected filter and pagination
     * @return Order[]
     */
-    public function getAllFiltered($keyword = ''){
-        if(!empty($keyword)){
+    public function getAllFiltered($request){
+        /*if(!empty($keyword)){
             $orders = Order::where('no_order', $keyword)->orderBy('id', 'DESC')->paginate(10);
         }else{
             $orders = Order::orderBy('id', 'DESC')->paginate(10);
+        }*/
+        if($request->no_order == null || $request->no_order == ''){
+          if($request->name == null || $request->name == ''){
+            $orders = Order::orderBy('id', 'DESC')->paginate(10);
+          }else{
+            $orders = Order::where('name', 'like', $request->name.'%')
+                            ->orderBy('id', 'DESC')
+                            ->paginate(10);
+          }
+        }else{
+          if($request->name == null || $request->name == ''){
+            $orders = Order::where('no_order', 'like', $request->no_order.'%')
+                            ->orderBy('id', 'DESC')->paginate(10);
+          }else{
+            $orders = Order::where('no_order', 'like', $request->no_order.'%')
+                            ->where('name', 'like', $request->name.'%')
+                            ->orderBy('id', 'DESC')
+                            ->paginate(10);
+          }
         }
 
         return $orders;
