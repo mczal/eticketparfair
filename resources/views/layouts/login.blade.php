@@ -8,6 +8,8 @@
         <meta charset="UTF-8">
         <title>@yield('title')</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <!-- favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/favicon.ico') }}" />
         <!-- Bootstrap 3.3.2 -->
         <link href="{{ asset("/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
         <!-- Font Awesome Icons -->

@@ -94,4 +94,43 @@
             </div>
         </div><!-- /.box-body -->
     </div>
+    <!-- migrate ticket -->
+    <div class="box box-solid">
+        <div class="box-header">
+            <h3 class="box-title">Transfer Remaining Unordered Ticket to Different Type</h3>
+        </div>
+        <div class="box-body text-left">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form action="{{ url('/types/'.$type->id.'/convert-tickets') }}" method="post">
+                          @include('commons.error')
+                          <div class="form-group">
+                            {!! csrf_field() !!}
+                              <label class="col-md-4 control-label">Ticket Type
+                                @if ($errors->has('dest_type'))
+                                  <span class="help-block">
+                                    <strong>{{ $errors->first('dest_type') }}</strong>
+                                  </span>
+                                @endif</label>
+                              <div class="col-md-2">
+                                  <select class="form-control" name="dest_type">
+                                      <option value=""></option>
+                                      @foreach($types as $typez)
+                                        @if($typez->id !== $type->id)
+                                          <option value="{{ $typez->id }}">{{ $typez->name }}</option>
+                                        @endif
+                                      @endforeach
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-fighter-jet"></i>Transfer</button>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -19,6 +19,13 @@
                     ->get();
     }
 
+    public function forTypeNotOrdered(Type $type){
+      return Ticket::where('type_id',$type->id)
+                    ->whereNull('order_date')
+                    ->orderBy('id', 'asc')
+                    ->get();
+    }
+
     public function findByUniqueCode($unique_code){
       return Ticket::where('unique_code', $unique_code)->first();
     }
@@ -92,15 +99,15 @@
                           ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
                           ->paginate(20);
           }else if($request->filter == 'ordered'){
-            return Ticket::where('order_date', '!=' , null)
+            return Ticket::whereNotNull('order_date')
                           ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
                           ->paginate(20);
           }else if($request->filter == 'actived'){
-            return Ticket::where('active_date', '!=' , null)
+            return Ticket::whereNotNull('active_date')
                           ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
                           ->paginate(20);
           }else if($request->filter == 'checked_in'){
-            return Ticket::where('check_in_date', '!=' , null)
+            return Ticket::whereNotNull('check_in_date')
                           ->where('unique_code', 'like' , '%'.$request->unique_code.'%')
                           ->paginate(20);
           }else{
@@ -118,17 +125,17 @@
                           ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
                           ->paginate(20);
           }else if($request->filter == 'ordered'){
-            return Ticket::where('order_date', '!=' , null)
+            return Ticket::whereNotNull('order_date')
                           ->whereIn('type_id',$request->type)
                           ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
                           ->paginate(20);
           }else if($request->filter == 'actived'){
-            return Ticket::where('active_date', '!=' , null)
+            return Ticket::whereNotNull('active_date')
                           ->whereIn('type_id',$request->type)
                           ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
                           ->paginate(20);
           }else if($request->filter == 'checked_in'){
-            return Ticket::where('check_in_date', '!=' , null)
+            return Ticket::whereNotNull('check_in_date')
                           ->whereIn('type_id',$request->type)
                           ->where('unique_code' , 'like' , '%'.$request->unique_code.'%')
                           ->paginate(20);

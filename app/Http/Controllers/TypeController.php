@@ -76,11 +76,13 @@ class TypeController extends Controller
     */
     public function show($id){
         $type = $this->types->findById($id);
+        $types = Type::get();
         $tickets = $this->tickets->forType($type);
         $countTicket = count($tickets);
         return view('types.show', [
             'type' => $type,
             'count' => $countTicket,
+            'types' => $types,
         ]);
     }
 
@@ -200,5 +202,26 @@ class TypeController extends Controller
       }else{
         return redirect('/types');
       }
+    }
+
+    public function changeAllNotOrderedTicketType(Request $request,$id){
+      $this->validate($request,[
+        'dest_type' => 'required|int'
+      ]);
+      //
+      $type = $this->types->findById($id);
+      $tickets = $this->tickets->forTypeNotOrdered($type);
+      //dd(count($tickets));
+      $dest_type = $this->types->findById($request->dest_type);
+      //dd($dest_type);
+      foreach($tickets as $ticket){
+        //dd($ticket);
+        $ticket->type()->dissociate();
+        //dd($ticket);
+        $ticket->type()->associate($dest_type);
+        $ticket->save();
+        //dd($ticket);
+      }
+      return redirect('/types')->with('success_message','All unordered ticket registered with type : "'.$type->name.'" was already converted to type : "'.$dest_type->name.'"');
     }
 }

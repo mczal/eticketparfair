@@ -61,6 +61,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('types/print/{id}', 'TypeController@printTicket');
     Route::post('types/remove-eager','TypeController@removeAllAssociatedWithType');
     Route::post('types/remove-lazy','TypeController@removeAllRelationsAssociatedWithType');
+    Route::post('types/{id}/convert-tickets','TypeController@changeAllNotOrderedTicketType');
     Route::resource('types', 'TypeController');
 
     Route::resource('confirmations', 'ConfirmationController');
