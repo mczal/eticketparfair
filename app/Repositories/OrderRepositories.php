@@ -46,21 +46,47 @@ class OrderRepositories{
         }*/
         if($request->no_order == null || $request->no_order == ''){
           if($request->name == null || $request->name == ''){
-            $orders = Order::orderBy('id', 'DESC')->paginate(10);
+            if($request->status == null || $request->status == '' || $request->status == -1){
+              $orders = Order::orderBy('id', 'DESC')->paginate(10);
+            }else{
+              $orders = Order::where('status',$request->status)
+                              ->paginate(10);
+            }
           }else{
-            $orders = Order::where('name', 'like', $request->name.'%')
-                            ->orderBy('id', 'DESC')
-                            ->paginate(10);
+            if($request->status == null || $request->status == '' || $request->status == -1){
+              $orders = Order::where('name', 'like', $request->name.'%')
+                              ->orderBy('id', 'DESC')
+                              ->paginate(10);
+            }else{
+              $orders = Order::where('name', 'like', $request->name.'%')
+                              ->where('status',$request->status)
+                              ->orderBy('id', 'DESC')
+                              ->paginate(10);
+            }
           }
         }else{
           if($request->name == null || $request->name == ''){
-            $orders = Order::where('no_order', 'like', $request->no_order.'%')
-                            ->orderBy('id', 'DESC')->paginate(10);
+            if($request->status == null || $request->status == '' || $request->status == -1){
+              $orders = Order::where('no_order', 'like', $request->no_order.'%')
+                              ->orderBy('id', 'DESC')->paginate(10);
+            }else{
+              $orders = Order::where('no_order', 'like', $request->no_order.'%')
+                              ->where('status',$request->status)
+                              ->orderBy('id', 'DESC')->paginate(10);
+            }
           }else{
-            $orders = Order::where('no_order', 'like', $request->no_order.'%')
-                            ->where('name', 'like', $request->name.'%')
-                            ->orderBy('id', 'DESC')
-                            ->paginate(10);
+            if($request->status == null || $request->status == '' || $request->status == -1){
+              $orders = Order::where('no_order', 'like', $request->no_order.'%')
+                              ->where('name', 'like', $request->name.'%')
+                              ->orderBy('id', 'DESC')
+                              ->paginate(10);
+            }else{
+              $orders = Order::where('no_order', 'like', $request->no_order.'%')
+                              ->where('name', 'like', $request->name.'%')
+                              ->where('status',$request->status)
+                              ->orderBy('id', 'DESC')
+                              ->paginate(10);
+            }
           }
         }
 

@@ -18,8 +18,15 @@
                 <div class="input-group">
                     <input type="text" class="form-control" name="unique_code" value="{{ app('request')->input('unique_code') }}" id="keyword" placeholder="Enter ticket code here to search ...."/>
                     {{--*/ $i = 0 /*--}}
+                    <div class="row">
+
+                    </div>
                     @foreach ($types as $type)
-                      <label for="ordered" class="control-label">{{$type->name}}</label><input id="ordered" type="checkbox" name="type[]" value="{{$type->id}}"{{ app('request')->input('type.'.$i.'') == $type->id ? ' checked '.$i++ : '' }}/>
+                      <div class="checkbox">
+                        <label>
+                          <input id="ordered" type="checkbox" name="type[]" value="{{$type->id}}"{{ app('request')->input('type.'.$i.'') == $type->id ? ' checked '.$i++ : '' }}/>{{$type->name}}
+                        </label>
+                      </div>
                     @endforeach
                     <select class="form-control" name="filter">
                       <option value="all"{{ app('request')->input('filter') == 'all' ? ' selected' : '' }}>All</option>
@@ -29,7 +36,7 @@
                       <option value="checked_in"{{ app('request')->input('filter') == 'checked_in' ? ' selected' : '' }}>Checked In</option>
                     </select>
                     <span class="input-group-btn">
-                        <button class="btn btn-info btn-flat" type="submit"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-info btn-flat btn-lg" type="submit"><i class="fa fa-search"></i></button>
                     </span>
                 </div>
             </form>

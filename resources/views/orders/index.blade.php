@@ -16,6 +16,13 @@
                     <div class="input-group">
                         <input type="text" class="form-control" name="no_order" value="{{ $no_order }}" id="no_order" placeholder="Enter no order to search ....">
                         <input type="text" class="form-control" name="name" value="{{ $name }}" id="name" placeholder="Enter Name to search ....">
+                        <select class="form-control" name="status">
+                          <option value="-1"{{ app('request')->input('status') == -1 ? ' selected' : '' }}>All</option>
+                          <option value="1"{{ app('request')->input('status') == 1 ? ' selected' : '' }}>Ordered</option>
+                          <option value="2"{{ app('request')->input('status') == 2 ? ' selected' : '' }}>Confirmed</option>
+                          <option value="3"{{ app('request')->input('status') == 3 ? ' selected' : '' }}>Paid</option>
+                          <option value="0"{{ app('request')->input('status') == 0 ? ' selected' : '' }}>Expire</option>
+                        </select>
                         <span class="input-group-btn">
                             <button class="btn btn-info btn-flat" type="submit"><i class="fa fa-search"></i></button>
                         </span>
