@@ -30,10 +30,32 @@
       return Ticket::where('unique_code', $unique_code)->first();
     }
 
+    public function findByUniqueCodeTrickie($unique_code){
+      return Ticket::where('unique_code' , 'like' , '%'.$unique_code.'%')->get();
+    }
+
     public function countTicketsRemaining($type_id){
         return Ticket::where('type_id', $type_id)
                     ->where('order_date', NULL)
                     ->count();
+    }
+
+    public function countTicketOrdered($type_id){
+      return Ticket::where('type_id',$type_id)
+                    ->whereNotNull('order_date')
+                    ->count();
+    }
+
+    public function countTicketActived($type_id){
+      return Ticket::where('type_id',$type_id)
+                    ->whereNotNull('active_date')
+                    ->count();
+    }
+
+    public function countTicketCheckedIn($type_id){
+      return Ticket::where('type_id',$type_id)
+                    ->whereNotNull('active_date')
+                    ->count('check_in_date');
     }
 
     public function getAllFiltered($request){

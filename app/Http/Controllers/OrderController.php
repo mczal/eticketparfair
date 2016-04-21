@@ -211,7 +211,16 @@ class OrderController extends Controller
           'unique_code' => 'required',
       ]);
 
-      $ticket = $this->tickets->findByUniqueCode($request->unique_code);
+      $ticket = $this->tickets->findByUniqueCodeTrickie($request->unique_code);
+      if($ticket == null || $ticket == ''){
+        return redirect('/orders/create-offline')->with('error_message', 'Ticket #<b>' . $request->unique_code . '</b> was not registered.');
+      }
+      if(count($ticket) > 1){
+        return redirect('/orders/create-offline')->with('error_message', 'Ticket count#<b>' . $request->unique_code . ' > 1 </b> .');
+      }
+      // dd($ticket->first());
+      // dd("lolos count ticket > 1");
+      $ticket = $ticket->first();
       if($ticket->order_date != null){
         return redirect('/orders/create-offline')->with('error_message', 'Ticket #<b>' . $ticket->unique_code . '</b> was already ordered.');
       }else{

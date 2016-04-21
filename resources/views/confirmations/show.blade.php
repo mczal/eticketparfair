@@ -114,12 +114,12 @@
                   <button class="btn btn-default" disabled>Valid</button>
                   @endif
                     <a href="{{ url('/confirmations/' . $confirmation->id . '/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
-                    <form action="{{ url('/confirmations/' . $confirmation->id) }}" method="post" style="display: inline">
+                    <!-- <form action="{{ url('/confirmations/' . $confirmation->id) }}" method="post" style="display: inline">
                         {!! csrf_field() !!}
                         {!! method_field('DELETE') !!}
 
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i> Delete</button>
-                    </form>
+                    </form> -->
                 </div>
                 <div class="col-sm-6 col-sm-offset-2">
                     <form style="display:inline" action="{{url('/confirmations/resendMail')}}" method="post">

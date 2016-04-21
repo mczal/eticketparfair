@@ -26,7 +26,7 @@ class Ticket extends Model
      * Generate hashed barcode name
      */
     public function generateBarcode(){
-        return $this->unique_code . '-' . md5($this->unique_code . '-' . $this->id);
+        return $this->unique_code;
     }
 
     /**

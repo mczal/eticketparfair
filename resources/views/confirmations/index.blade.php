@@ -64,13 +64,13 @@
             <!--
               <a href="{{url('/confirmations/'.$confirmation->id.'/edit')}}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
             -->
-              <form style="display:inline" action="{{url('/confirmations/'.$confirmation->id)}}" method="post">
+              <!-- <form style="display:inline" action="{{url('/confirmations/'.$confirmation->id)}}" method="post">
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}
 
                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this item?')"><i class="fa fa-trash-o"></i></button>
 
-              </form>
+              </form> -->
             </td>
           </tr>
         @endforeach
